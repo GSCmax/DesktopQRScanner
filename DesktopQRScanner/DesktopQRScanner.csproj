@@ -14,11 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tools\" />
-    <Folder Include="Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <!--<Resource Include="RSC\icon.ico">
       <Link>Resources\icon.ico</Link>
     </Resource>-->

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopQRScanner.View"
         xmlns:vm="clr-namespace:DesktopQRScanner.VModel"
+        xmlns:tools="clr-namespace:DesktopQRScanner.Tools"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Title="DesktopQRScanner" Height="404" Width="645"
         Style="{StaticResource WindowBlur}" UseLayoutRounding="True"
@@ -43,9 +44,12 @@
                             <TextBlock Text="使用暗色主题" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"/>
                             <TextBlock Text="自动打开链接" Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
-                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"/>
+                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
+                                          IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoOpenLink}"/>
                             <TextBlock Text="历史记录数量" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
-                            <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="3" Width="60" Style="{StaticResource NumericUpDown.Small}" FontSize="13" Margin="0,0,5,0"/>
+                            <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="3" Style="{StaticResource NumericUpDown.Small}" Margin="0,0,5,0"
+                                              Width="60" Maximum="500" Minimum="0" FontSize="13"
+                                              Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=HistorySaveCount}"/>
                         </Grid>
                     </Border>
                 </hc:TransitioningContentControl>
@@ -103,37 +107,51 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Background="{StaticResource TextIconBrush}">
-                        <TextBlock Style="{StaticResource TextBlockDefault}" Foreground="{StaticResource PrimaryTextBrush}" Text="历史记录"/>
+                        <TextBlock Style="{StaticResource TextBlockDefault}" Foreground="{StaticResource PrimaryTextBrush}" Text="历史记录" FontSize="18"/>
                     </Border>
                     <Border Grid.Row="1">
-                        <ListBox BorderThickness="0">
-                            <ListBoxItem Content="http://schemas.microsoft.com/winfx/2006/xaml/presentation" ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}">
-                                <ListBoxItem.ContextMenu>
-                                    <ContextMenu Width="114" BorderThickness="0">
-                                        <MenuItem Header="打开"/>
-                                        <MenuItem Header="复制"/>
-                                        <MenuItem Header="删除"/>
-                                    </ContextMenu>
-                                </ListBoxItem.ContextMenu>
-                            </ListBoxItem>
-                            <ListBoxItem Content="http://schemas.microsoft.com/winfx/2006/xaml"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/expression/blend/2008"/>
-                            <ListBoxItem Content="http://schemas.openxmlformats.org/markup-compatibility/2006"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/winfx/2006/xaml"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/expression/blend/2008"/>
-                            <ListBoxItem Content="http://schemas.openxmlformats.org/markup-compatibility/2006"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/winfx/2006/xaml"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/expression/blend/2008"/>
-                            <ListBoxItem Content="http://schemas.openxmlformats.org/markup-compatibility/2006"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/winfx/2006/xaml"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/expression/blend/2008"/>
-                            <ListBoxItem Content="http://schemas.openxmlformats.org/markup-compatibility/2006"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/winfx/2006/xaml"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/expression/blend/2008"/>
-                            <ListBoxItem Content="http://schemas.openxmlformats.org/markup-compatibility/2006"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/winfx/2006/xaml"/>
-                            <ListBoxItem Content="http://schemas.microsoft.com/expression/blend/2008"/>
-                            <ListBoxItem Content="http://schemas.openxmlformats.org/markup-compatibility/2006"/>
+                        <ListBox BorderThickness="0" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" Style="{StaticResource ListBox.Small}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle.Small}">
+                                    <Setter Property="hc:BorderElement.CornerRadius" Value="12"/>
+                                    <Setter Property="Margin" Value="0,1"/>
+                                    <Setter Property="ContextMenu">
+                                        <Setter.Value>
+                                            <ContextMenu Width="90">
+                                                <MenuItem Header="打开">
+                                                    <MenuItem.Icon>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource FullScreenGeometry}"/>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <MenuItem Header="固定">
+                                                    <MenuItem.Icon>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource NailGeometry}"/>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <MenuItem Header="删除">
+                                                    <MenuItem.Icon>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource CloseGeometry}"/>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                            <Setter Property="Foreground" Value="{StaticResource SecondaryRegionBrush}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#e2e2e2"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </Border>
                 </Grid>

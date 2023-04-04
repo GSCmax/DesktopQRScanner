@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DesktopQRScanner.Tools;
+using DesktopQRScanner.View;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -17,14 +19,14 @@ namespace DesktopQRScanner
         {
             base.OnStartup(e);
 
-
+            GlobalDataHelper.Init();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
 
-
+            GlobalDataHelper.Save();
         }
     }
 }
