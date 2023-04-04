@@ -14,6 +14,9 @@ namespace DesktopQRScanner.Model
 
         [ObservableProperty]
         private string link;
+
+        [ObservableProperty]
+        private bool isStared;
     }
 }
 

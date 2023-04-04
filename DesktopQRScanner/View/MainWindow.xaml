@@ -25,8 +25,7 @@
             <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{StaticResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}"/>
-            <Popup Grid.Column="1" HorizontalOffset="281" VerticalOffset="0" IsOpen="{Binding ShowPop}"
-                   PlacementTarget="{Binding ElementName=configBTN}" AllowsTransparency="True" StaysOpen="False">
+            <Popup Grid.Column="1" HorizontalOffset="281" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
                 <hc:TransitioningContentControl Grid.Column="0" Grid.Row="1" TransitionMode="Top2Bottom">
                     <Border Background="{DynamicResource ThirdlyRegionBrush}" CornerRadius="0,0,8,8" Margin="5,0,5,5" Effect="{StaticResource EffectShadow2}">
                         <Grid>
@@ -113,22 +112,23 @@
                         <ListBox BorderThickness="0" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" Style="{StaticResource ListBox.Small}">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle.Small}">
+                                    <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
                                     <Setter Property="hc:BorderElement.CornerRadius" Value="12"/>
                                     <Setter Property="Margin" Value="0,1"/>
                                     <Setter Property="ContextMenu">
                                         <Setter.Value>
-                                            <ContextMenu Width="90">
-                                                <MenuItem Header="打开">
+                                            <ContextMenu Width="120">
+                                                <MenuItem Header="打开链接" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}">
                                                     <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource FullScreenGeometry}"/>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource DialogBoxLauncherGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="固定">
+                                                <MenuItem Header="切换收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}">
                                                     <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource NailGeometry}"/>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource StarGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="删除">
+                                                <MenuItem Header="删除" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource CloseGeometry}"/>
                                                     </MenuItem.Icon>
@@ -137,19 +137,27 @@
                                         </Setter.Value>
                                     </Setter>
                                     <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#e2e2e2"/>
+                                        </Trigger>
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
                                             <Setter Property="Foreground" Value="{StaticResource SecondaryRegionBrush}"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#e2e2e2"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </ListBox.ItemContainerStyle>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path Grid.Column="0" Height="15" Data="{StaticResource StarGeometry}" Fill="{Binding ElementName=TB, Path=Foreground}" Stretch="Uniform"
+                                              Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
+                                        <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
+                                    </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

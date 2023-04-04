@@ -55,9 +55,9 @@ namespace DesktopQRScanner.Tools
             else
                 historyLinks = new BindingList<LinkItem>();
 
-            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "111" });
-            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "222" });
-            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "333" });
+            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "111", IsStared = true });
+            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "222", IsStared = false });
+            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "333", IsStared = false });
         }
 
 
