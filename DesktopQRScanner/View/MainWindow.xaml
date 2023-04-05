@@ -24,10 +24,10 @@
         <DataTemplate x:Key="UT">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="25"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Path Grid.Column="0" Height="15" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
+                <Path Grid.Column="0" Height="15" Margin="-5,0,0,0" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
                       Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
                 <TextBlock Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
             </Grid>
@@ -35,10 +35,10 @@
         <DataTemplate x:Key="ST">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="25"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Path Grid.Column="0" Height="15" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
+                <Path Grid.Column="0" Height="15" Margin="-5,0,0,0" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
                       Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
                 <hc:RunningBlock Grid.Column="1" FontSize="15" BorderThickness="0" VerticalContentAlignment="Center" VerticalAlignment="Center"
                                  AutoRun="True" Runaway="False" AutoReverse="False" Content="{Binding Link, Converter={StaticResource SRC}, ConverterParameter=1}" Speed="30"
