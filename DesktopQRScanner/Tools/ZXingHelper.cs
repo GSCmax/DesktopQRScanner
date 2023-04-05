@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZXing.Windows.Compatibility;
+using System.Drawing;
+using System.IO;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ZXing;
 using ZXing.QrCode;
-using System.Drawing;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Windows;
-using System.IO;
+using ZXing.Windows.Compatibility;
 
 namespace DesktopQRScanner.Tools
 {
@@ -21,7 +17,6 @@ namespace DesktopQRScanner.Tools
         {
             var reader = new BarcodeReader();
             var result = reader.Decode(Convert2Bitmap((BitmapSource)imageSource));
-
             return result?.Text;
         }
 

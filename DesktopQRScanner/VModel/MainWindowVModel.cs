@@ -5,14 +5,8 @@ using DesktopQRScanner.Tools;
 using HandyControl.Controls;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,25 +18,23 @@ namespace DesktopQRScanner.VModel
         public MainWindowVModel() => Screenshot.Snapped += Screenshot_Snapped;
 
         /// <summary>
-        /// 截图成功通知
+        /// Github按钮点击
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Screenshot_Snapped(object? sender, HandyControl.Data.FunctionEventArgs<System.Windows.Media.ImageSource> e)
-        {
-            ImageSource4Binding = e.Info;
-            AddQRCode2List();
-        }
-
         [RelayCommand]
         private void showGithubClick()
         {
             Process.Start(new ProcessStartInfo() { FileName = @"https://github.com/GSCmax/DesktopQRScanner", UseShellExecute = true });
         }
 
+        /// <summary>
+        /// 设置Pop展开状态
+        /// </summary>
         [ObservableProperty]
         private bool showPop = false;
 
+        /// <summary>
+        /// 展开设置Pop
+        /// </summary>
         [RelayCommand]
         private void showPopClick()
         {
@@ -50,10 +42,38 @@ namespace DesktopQRScanner.VModel
         }
 
         /// <summary>
-        /// 当前选择的内容
+        /// Image绑定图像
+        /// </summary>
+        [ObservableProperty]
+        private ImageSource imageSource4Binding = null;
+
+        /// <summary>
+        /// 保存二维码
+        /// </summary>
+        [RelayCommand]
+        private void saveImage()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "图像文件 (*.png)|*.png";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageSource4Binding));
+                using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                {
+                    encoder.Save(fileStream);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 当前历史记录选择的内容
         /// </summary>
         [ObservableProperty]
         private LinkItem selectedLinkItem;
+
+        #region 历史记录列表右键菜单
 
         /// <summary>
         /// 复制
@@ -71,23 +91,6 @@ namespace DesktopQRScanner.VModel
         private void openLink()
         {
             Process.Start(new ProcessStartInfo() { FileName = SelectedLinkItem.Link, UseShellExecute = true });
-        }
-
-        [RelayCommand]
-        private void saveImage()
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "图像文件 (*.png)|*.png";
-
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageSource4Binding));
-                using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
-                {
-                    encoder.Save(fileStream);
-                }
-            }
         }
 
         /// <summary>
@@ -117,9 +120,22 @@ namespace DesktopQRScanner.VModel
             GlobalDataHelper.historyLinks.Remove(SelectedLinkItem);
         }
 
-        [ObservableProperty]
-        private ImageSource imageSource4Binding = null;
+        #endregion
 
+        /// <summary>
+        /// 截图成功
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Screenshot_Snapped(object? sender, HandyControl.Data.FunctionEventArgs<System.Windows.Media.ImageSource> e)
+        {
+            ImageSource4Binding = e.Info;
+            AddQRCode2List();
+        }
+
+        /// <summary>
+        /// 打开图像文件
+        /// </summary>
         [RelayCommand]
         private void openFileClick()
         {
@@ -138,6 +154,9 @@ namespace DesktopQRScanner.VModel
                 ImageSource4Binding = null;
         }
 
+        /// <summary>
+        /// QR扫描
+        /// </summary>
         private void AddQRCode2List()
         {
             string t = ZXingHelper.ReadQRCode(ImageSource4Binding);

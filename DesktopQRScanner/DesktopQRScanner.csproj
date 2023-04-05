@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources/icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<Resource Include="RSC\icon.ico">
+    <Resource Include="Resources\icon.ico">
       <Link>Resources\icon.ico</Link>
-    </Resource>-->
+    </Resource>
     <Resource Include="Resources\cloud.png">
       <Link>Resources\cloud.png</Link>
     </Resource>

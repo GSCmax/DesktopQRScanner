@@ -9,7 +9,8 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Title="DesktopQRScanner" Height="404" Width="645"
         Style="{StaticResource WindowBlur}" UseLayoutRounding="True"
-        Background="{StaticResource CloudDrawingBrush}"
+        Background="{StaticResource CloudDrawingBrush}" Topmost="True"
+        Icon="/DesktopQRScanner;component/Resources/icon.ico"
         BorderThickness="0" ResizeMode="CanMinimize">
 
     <hc:BlurWindow.DataContext>
@@ -18,6 +19,7 @@
 
     <hc:BlurWindow.Resources>
         <local:Image2RotateConverter x:Key="I2RC"/>
+        <local:StringRepeatConverter x:Key="SRC"/>
     </hc:BlurWindow.Resources>
 
     <hc:BlurWindow.NonClientAreaContent>
@@ -172,7 +174,7 @@
                                                 </MenuItem>
                                                 <MenuItem Header="生成" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource LeftGeometry}"/>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource AlignVCenterGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
                                                 <MenuItem Header="收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
@@ -206,9 +208,12 @@
                                             <ColumnDefinition Width="30"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Path Grid.Column="0" Height="15" Data="{StaticResource StarGeometry}" Fill="{Binding ElementName=TB, Path=Foreground}" Stretch="Uniform"
+                                        <Path Grid.Column="0" Height="15" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
                                               Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
-                                        <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
+                                        <!--<TextBlock Grid.Column="1" FontSize="15" Text="{Binding Link}"/>-->
+                                        <hc:RunningBlock Grid.Column="1" BorderThickness="0" VerticalContentAlignment="Center" VerticalAlignment="Center"
+                                                         Runaway="False" AutoReverse="False"  Content="{Binding Link, Converter={StaticResource SRC}, ConverterParameter=1}" Speed="30"
+                                                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
