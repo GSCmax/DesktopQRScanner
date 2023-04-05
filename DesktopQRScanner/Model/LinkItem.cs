@@ -13,5 +13,8 @@ namespace DesktopQRScanner.Model
 
         [ObservableProperty]
         private bool isStared;
+
+        [ObservableProperty]
+        private bool isSelected;
     }
 }

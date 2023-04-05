@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
+using DesktopQRScanner.Model;
 
 namespace DesktopQRScanner.View
 {
@@ -67,6 +71,24 @@ namespace DesktopQRScanner.View
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
+        }
+    }
+
+    public class MyTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate UnselectedTemplate { get; set; }
+        public DataTemplate SelectedTemplate { get; set; }
+
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+            if((item as LinkItem).IsSelected)
+            {
+                return SelectedTemplate;
+            }
+            else
+            {
+                return UnselectedTemplate;
+            }
         }
     }
 }
