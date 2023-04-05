@@ -19,7 +19,15 @@ namespace DesktopQRScanner
         {
             base.OnStartup(e);
 
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
+
             GlobalDataHelper.Init();
+        }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
+            e.Handled = true;
         }
 
         protected override void OnExit(ExitEventArgs e)

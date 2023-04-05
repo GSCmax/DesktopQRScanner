@@ -54,10 +54,6 @@ namespace DesktopQRScanner.Tools
                 }
             else
                 historyLinks = new BindingList<LinkItem>();
-
-            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "111", IsStared = true });
-            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "222", IsStared = false });
-            historyLinks.Add(new LinkItem { LinkDateTime = DateTime.Now, Link = "333", IsStared = false });
         }
 
 
@@ -69,7 +65,7 @@ namespace DesktopQRScanner.Tools
             var json1 = JsonConvert.SerializeObject(appConfig, Formatting.Indented);
             File.WriteAllText(AppConfig.SavePath, json1);
 
-            var json2 = JsonConvert.SerializeObject(historyLinks, Formatting.Indented);
+            var json2 = JsonConvert.SerializeObject(appConfig.AutoArrange ? historyLinks.OrderByDescending(n => n.IsStared).Take(appConfig.HistorySaveCount) : historyLinks.Take(appConfig.HistorySaveCount), Formatting.Indented);
             File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}HistoryLinks.json", json2);
         }
     }

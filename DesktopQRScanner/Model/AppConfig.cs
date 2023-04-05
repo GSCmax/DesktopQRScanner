@@ -19,6 +19,11 @@ namespace DesktopQRScanner.Model
         public bool AutoOpenLink { get; set; } = true;
 
         /// <summary>
+        /// 历史自动整理
+        /// </summary>
+        public bool AutoArrange { get; set; } = true;
+
+        /// <summary>
         /// 历史记录数量
         /// </summary>
         public int HistorySaveCount { get; set; } = 100;
