@@ -150,7 +150,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Background="{StaticResource TextIconBrush}">
-                        <TextBlock Style="{StaticResource TextBlockDefault}" Foreground="{StaticResource PrimaryTextBrush}" Text="历史记录" FontSize="18"/>
+                        <TextBlock Margin="0,3,0,0" Style="{StaticResource TextBlockDefault}" Foreground="{StaticResource PrimaryTextBrush}" Text="历史记录" FontSize="18"/>
                     </Border>
                     <Border Grid.Row="1">
                         <ListBox BorderThickness="0" Style="{StaticResource ListBox.Small}" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" SelectedItem="{Binding SelectedLinkItem}">
