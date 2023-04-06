@@ -110,7 +110,7 @@ namespace DesktopQRScanner.View
         {
             var ele = container as FrameworkElement;
             var li = item as LinkItem;
-            return li.IsStared ? SelectedTemplate : UnselectedTemplate;
+            return li.IsSelected ? SelectedTemplate : UnselectedTemplate;
         }
     }
 }
