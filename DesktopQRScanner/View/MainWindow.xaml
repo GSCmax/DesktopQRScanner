@@ -96,7 +96,7 @@
 
         <!--ImageSelector-->
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
-            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource EffectShadow5}"/>
+            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource EffectShadow4}"/>
         </hc:TransitioningContentControl>
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
@@ -128,7 +128,7 @@
 
         <!--Button-->
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="3" TransitionMode="Bottom2TopWithFade">
-            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource EffectShadow5}"/>
+            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource EffectShadow4}"/>
         </hc:TransitioningContentControl>
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="3" TransitionMode="Bottom2TopWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
@@ -140,7 +140,7 @@
 
         <!--ListBox-->
         <hc:TransitioningContentControl Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" TransitionMode="Bottom2TopWithFade">
-            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource EffectShadow5}"/>
+            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource EffectShadow4}"/>
         </hc:TransitioningContentControl>
         <hc:TransitioningContentControl Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" TransitionMode="Right2LeftWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
