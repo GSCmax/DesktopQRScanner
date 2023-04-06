@@ -8,8 +8,9 @@
         xmlns:tools="clr-namespace:DesktopQRScanner.Tools"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Title="DesktopQRScanner" SizeToContent="WidthAndHeight"
-        Background="White" UseLayoutRounding="True" Topmost="True"
+        Background="White" UseLayoutRounding="True"
         Icon="/DesktopQRScanner;component/Resources/icon.ico"
+        WindowStartupLocation="CenterScreen" Topmost="True"
         BorderThickness="0" ResizeMode="CanMinimize">
 
     <hc:Window.DataContext>
