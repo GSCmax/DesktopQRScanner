@@ -13,6 +13,11 @@ namespace DesktopQRScanner.Tools
 {
     internal class ZXingHelper
     {
+        /// <summary>
+        /// 扫描QR
+        /// </summary>
+        /// <param name="imageSource"></param>
+        /// <returns></returns>
         public static string ReadQRCode(ImageSource imageSource)
         {
             var reader = new BarcodeReader();
@@ -20,7 +25,13 @@ namespace DesktopQRScanner.Tools
             return result?.Text;
         }
 
-
+        /// <summary>
+        /// 生成QR
+        /// </summary>
+        /// <param name="text">QR文本</param>
+        /// <param name="width">宽度</param>
+        /// <param name="height">长度</param>
+        /// <returns></returns>
         public static ImageSource GenerateQRCode(string text, int width = 300, int height = 300)
         {
             var writer = new BarcodeWriter();
