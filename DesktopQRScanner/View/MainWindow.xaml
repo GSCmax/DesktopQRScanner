@@ -153,7 +153,7 @@
                     </Border>
                     <Border Grid.Row="1">
                         <ListBox BorderThickness="0" Style="{StaticResource ListBox.Small}" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" SelectedItem="{Binding SelectedLinkItem}">
-                            <ListBox.ItemTemplateSelector>
+                            <!--<ListBox.ItemTemplateSelector>
                                 <local:MyTemplateSelector>
                                     <local:MyTemplateSelector.SelectedTemplate>
                                         <DataTemplate>
@@ -184,7 +184,7 @@
                                         </DataTemplate>
                                     </local:MyTemplateSelector.UnselectedTemplate>
                                 </local:MyTemplateSelector>
-                            </ListBox.ItemTemplateSelector>
+                            </ListBox.ItemTemplateSelector>-->
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle.Small}">
                                     <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
@@ -243,6 +243,27 @@
                                     </Style.Triggers>
                                 </Style>
                             </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path Grid.Column="0" Height="15" Margin="-5,0,0,0" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
+                                                      Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
+                                        <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                            <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                                            <Setter TargetName="TB" Property="TextWrapping" Value="NoWrap"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </Border>
                 </Grid>

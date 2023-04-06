@@ -99,7 +99,7 @@ namespace DesktopQRScanner.View
     }
 
     /// <summary>
-    /// listbox模板选择器
+    /// listbox模板选择器（未使用）
     /// </summary>
     public class MyTemplateSelector : DataTemplateSelector
     {
