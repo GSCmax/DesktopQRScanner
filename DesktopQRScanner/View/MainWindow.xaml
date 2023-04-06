@@ -18,6 +18,7 @@
 
     <hc:Window.Resources>
         <local:ImageRotateConverter x:Key="IRC"/>
+        <local:String2VisibilityConverter x:Key="S2VC"/>
     </hc:Window.Resources>
 
     <hc:Window.NonClientAreaContent>
@@ -30,6 +31,9 @@
             </Grid.ColumnDefinitions>
             <Border Grid.Column="1" Height="23" Width="100" CornerRadius="5" Margin="0,0,3,0" Background="#e2e2e2">
                 <TextBlock FontWeight="Bold" Text="0.0.1.0 .NET6.0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
+            </Border>
+            <Border Grid.Column="1" Height="23" Width="100" CornerRadius="5" Margin="0,0,3,0" Background="{StaticResource DangerBrush}" Visibility="{Binding ErrMsg, Converter={StaticResource S2VC}}">
+                <TextBlock FontWeight="Bold" Text="{Binding ErrMsg}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
             </Border>
             <Button Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{StaticResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource GithubGeometry}"

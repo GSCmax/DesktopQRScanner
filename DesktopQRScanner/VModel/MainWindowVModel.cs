@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,7 +16,33 @@ namespace DesktopQRScanner.VModel
 {
     internal partial class MainWindowVModel : ObservableObject
     {
-        public MainWindowVModel() => Screenshot.Snapped += Screenshot_Snapped;
+        public MainWindowVModel()
+        {
+            Screenshot.Snapped += Screenshot_Snapped;
+            errTimer.Elapsed += ErrTimer_Elapsed;
+        }
+
+        /// <summary>
+        /// 错误提示文字
+        /// </summary>
+        [ObservableProperty]
+        private string errMsg = null;
+
+        public Timer errTimer = new Timer()
+        {
+            AutoReset = false,
+            Interval = 3000,
+        };
+
+        /// <summary>
+        /// 清除错误提示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ErrTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            ErrMsg = null;
+        }
 
         /// <summary>
         /// Github按钮点击
@@ -81,7 +108,15 @@ namespace DesktopQRScanner.VModel
         [RelayCommand]
         private void copyLink()
         {
-            Clipboard.SetText(SelectedLinkItem.Link);
+            try
+            {
+                Clipboard.SetText(SelectedLinkItem.Link);
+            }
+            catch
+            {
+                throw new Exception("系统剪切板异常");
+            }
+
         }
 
         /// <summary>
@@ -90,7 +125,14 @@ namespace DesktopQRScanner.VModel
         [RelayCommand]
         private void openLink()
         {
-            Process.Start(new ProcessStartInfo() { FileName = SelectedLinkItem.Link, UseShellExecute = true });
+            try
+            {
+                Process.Start(new ProcessStartInfo() { FileName = SelectedLinkItem.Link, UseShellExecute = true });
+            }
+            catch
+            {
+                throw new Exception("无法打开此链接");
+            }
         }
 
         /// <summary>
@@ -174,7 +216,7 @@ namespace DesktopQRScanner.VModel
             }
             else
             {
-                throw new Exception("111");
+                throw new Exception("未能扫描二维码");
             }
         }
     }

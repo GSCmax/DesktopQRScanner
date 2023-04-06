@@ -1,4 +1,5 @@
 ﻿using DesktopQRScanner.Tools;
+using DesktopQRScanner.VModel;
 using System.Windows;
 
 namespace DesktopQRScanner
@@ -19,7 +20,10 @@ namespace DesktopQRScanner
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message);
+            var mainWindowDataContext = Application.Current.MainWindow.DataContext as MainWindowVModel;
+            mainWindowDataContext.ErrMsg = e.Exception.Message;
+            mainWindowDataContext.errTimer.Start();
+
             e.Handled = true;
         }
 

@@ -39,6 +39,25 @@ namespace DesktopQRScanner.View
     }
 
     /// <summary>
+    /// 文本是否为空转换器
+    /// </summary>
+    public class String2VisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Collapsed;
+            else
+                return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
     /// xaml字符串重复（未使用）
     /// </summary>
     public class StringRepeatConverter : IValueConverter
