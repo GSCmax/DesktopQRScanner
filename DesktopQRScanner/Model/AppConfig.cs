@@ -7,7 +7,7 @@ namespace DesktopQRScanner.Model
         /// <summary>
         /// 配置文件存储路径
         /// </summary>
-        public static readonly string SavePath = $"{AppDomain.CurrentDomain.BaseDirectory}DesktopQRScannerConfig.json";
+        public static readonly string SavePath = $"{AppDomain.CurrentDomain.BaseDirectory}Config.json";
 
         /// <summary>
         /// 自动打开链接

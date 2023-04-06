@@ -39,10 +39,10 @@ namespace DesktopQRScanner.Tools
                 appConfig = new AppConfig();
 
             //读取devCustoms
-            if (File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}HistoryLinks.json"))
+            if (File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}Historys.json"))
                 try
                 {
-                    var json = File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}HistoryLinks.json");
+                    var json = File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}Historys.json");
                     historyLinks = (string.IsNullOrEmpty(json) ? new BindingList<LinkItem>() : JsonConvert.DeserializeObject<BindingList<LinkItem>>(json)) ?? new BindingList<LinkItem>();
                 }
                 catch
@@ -63,7 +63,7 @@ namespace DesktopQRScanner.Tools
             File.WriteAllText(AppConfig.SavePath, json1);
 
             var json2 = JsonConvert.SerializeObject(appConfig.AutoArrange ? historyLinks.OrderByDescending(n => n.IsStared).Take(appConfig.HistorySaveCount) : historyLinks.Take(appConfig.HistorySaveCount), Formatting.Indented);
-            File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}HistoryLinks.json", json2);
+            File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}Historys.json", json2);
         }
     }
 }

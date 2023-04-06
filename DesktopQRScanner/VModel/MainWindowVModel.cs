@@ -174,7 +174,7 @@ namespace DesktopQRScanner.VModel
             }
             else
             {
-
+                throw new Exception("111");
             }
         }
     }

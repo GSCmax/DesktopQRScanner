@@ -1,11 +1,10 @@
-﻿using System;
+﻿using DesktopQRScanner.Model;
+using System;
 using System.Globalization;
 using System.Text;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
-using DesktopQRScanner.Model;
 
 namespace DesktopQRScanner.View
 {
@@ -20,7 +19,10 @@ namespace DesktopQRScanner.View
         }
     }
 
-    public class Image2RotateConverter : IValueConverter
+    /// <summary>
+    /// 旋转二维码展示区打开图标
+    /// </summary>
+    public class ImageRotateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -36,6 +38,9 @@ namespace DesktopQRScanner.View
         }
     }
 
+    /// <summary>
+    /// xaml字符串重复（未使用）
+    /// </summary>
     public class StringRepeatConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -61,7 +66,7 @@ namespace DesktopQRScanner.View
                 }
                 for (var i = 0; i < num; i++)
                 {
-                    builder.Append(strValue);
+                    builder.Append(strValue + " ");
                 }
                 return builder.ToString();
             }
@@ -74,6 +79,9 @@ namespace DesktopQRScanner.View
         }
     }
 
+    /// <summary>
+    /// listbox模板选择器
+    /// </summary>
     public class MyTemplateSelector : DataTemplateSelector
     {
         public DataTemplate UnselectedTemplate { get; set; }
@@ -81,14 +89,9 @@ namespace DesktopQRScanner.View
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if((item as LinkItem).IsSelected)
-            {
-                return SelectedTemplate;
-            }
-            else
-            {
-                return UnselectedTemplate;
-            }
+            var ele = container as FrameworkElement;
+            var li = item as LinkItem;
+            return li.IsStared ? SelectedTemplate : UnselectedTemplate;
         }
     }
 }
