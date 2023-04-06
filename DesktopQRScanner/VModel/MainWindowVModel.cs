@@ -216,7 +216,7 @@ namespace DesktopQRScanner.VModel
             }
             else
             {
-                throw new Exception("未能扫描二维码");
+                throw new Exception("未能识别二维码");
             }
         }
     }
