@@ -39,6 +39,25 @@ namespace DesktopQRScanner.View
     }
 
     /// <summary>
+    /// 旋转二维码展示区保存图标（未使用）
+    /// </summary>
+    public class SaveBTNShowConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Collapsed;
+            else
+                return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
     /// 文本是否为空转换器
     /// </summary>
     public class String2VisibilityConverter : IValueConverter

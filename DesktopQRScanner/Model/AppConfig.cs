@@ -22,6 +22,6 @@ namespace DesktopQRScanner.Model
         /// <summary>
         /// 历史记录数量
         /// </summary>
-        public int HistorySaveCount { get; set; } = 100;
+        public int HistorySaveCount { get; set; } = 50;
     }
 }
