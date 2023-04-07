@@ -3,7 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ZXing;
 using ZXing.QrCode;
@@ -18,10 +17,10 @@ namespace DesktopQRScanner.Tools
         /// </summary>
         /// <param name="imageSource"></param>
         /// <returns></returns>
-        public static string ReadQRCode(ImageSource imageSource)
+        public static string ReadQRCode(BitmapSource bitmapSource)
         {
             var reader = new BarcodeReader();
-            var result = reader.Decode(Convert2Bitmap((BitmapSource)imageSource));
+            var result = reader.Decode(Convert2Bitmap(bitmapSource));
             return result?.Text;
         }
 
@@ -32,7 +31,7 @@ namespace DesktopQRScanner.Tools
         /// <param name="width">宽度</param>
         /// <param name="height">长度</param>
         /// <returns></returns>
-        public static ImageSource GenerateQRCode(string text, int width = 300, int height = 300)
+        public static BitmapSource GenerateQRCode(string text, int width = 300, int height = 300)
         {
             var writer = new BarcodeWriter();
             writer.Format = BarcodeFormat.QR_CODE;
@@ -68,13 +67,13 @@ namespace DesktopQRScanner.Tools
         /// </summary>
         /// <param name="bitmapsource">BitmapSource数据</param>
         /// <returns>Bitmap数据</returns>
-        public static Bitmap Convert2Bitmap(BitmapSource bitmapsource)
+        public static Bitmap Convert2Bitmap(BitmapSource bitmapSource)
         {
             Bitmap bitmap;
             using (var outStream = new MemoryStream())
             {
                 BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapsource));
+                enc.Frames.Add(BitmapFrame.Create(bitmapSource));
                 enc.Save(outStream);
                 bitmap = new Bitmap(outStream);
             }

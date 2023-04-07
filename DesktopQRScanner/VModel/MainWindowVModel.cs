@@ -2,14 +2,13 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopQRScanner.Model;
 using DesktopQRScanner.Tools;
-using HandyControl.Controls;
+using HinsHo.ScreenShot.CSharp;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Timers;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.VModel
@@ -18,7 +17,6 @@ namespace DesktopQRScanner.VModel
     {
         public MainWindowVModel()
         {
-            Screenshot.Snapped += Screenshot_Snapped;
             errTimer.Elapsed += ErrTimer_Elapsed;
         }
 
@@ -72,7 +70,7 @@ namespace DesktopQRScanner.VModel
         /// Image绑定图像
         /// </summary>
         [ObservableProperty]
-        private ImageSource imageSource4Binding = null;
+        private BitmapSource bitmapSource4Binding = null;
 
         /// <summary>
         /// 保存二维码
@@ -86,12 +84,27 @@ namespace DesktopQRScanner.VModel
             if (saveFileDialog.ShowDialog() == true)
             {
                 BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageSource4Binding));
+                encoder.Frames.Add(BitmapFrame.Create(BitmapSource4Binding));
                 using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
                 {
                     encoder.Save(fileStream);
                 }
             }
+        }
+
+        /// <summary>
+        /// 截图
+        /// </summary>
+        [RelayCommand]
+        private void screenShot()
+        {
+            ScreenshotOptions screenshotOptions = new ScreenshotOptions()
+            {
+                BackgroundOpacity = 0.6,
+                SelectionRectangleBorderBrush = (System.Windows.Media.Brush)Application.Current.FindResource("PrimaryBrush")
+            };
+            BitmapSource4Binding = Screenshot.CaptureRegionToBitmapSource(screenshotOptions);
+            AddQRCode2List();
         }
 
         /// <summary>
@@ -141,7 +154,7 @@ namespace DesktopQRScanner.VModel
         [RelayCommand]
         private void genLink()
         {
-            ImageSource4Binding = ZXingHelper.GenerateQRCode(SelectedLinkItem.Link);
+            BitmapSource4Binding = ZXingHelper.GenerateQRCode(SelectedLinkItem.Link);
         }
 
         /// <summary>
@@ -165,35 +178,24 @@ namespace DesktopQRScanner.VModel
         #endregion
 
         /// <summary>
-        /// 截图成功
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Screenshot_Snapped(object? sender, HandyControl.Data.FunctionEventArgs<System.Windows.Media.ImageSource> e)
-        {
-            ImageSource4Binding = e.Info;
-            AddQRCode2List();
-        }
-
-        /// <summary>
         /// 打开图像文件
         /// </summary>
         [RelayCommand]
         private void openFileClick()
         {
-            if (ImageSource4Binding == null)
+            if (BitmapSource4Binding == null)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "图像文件 (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
 
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    ImageSource4Binding = new BitmapImage(new Uri(openFileDialog.FileName));
+                    BitmapSource4Binding = new BitmapImage(new Uri(openFileDialog.FileName));
                     AddQRCode2List();
                 }
             }
             else
-                ImageSource4Binding = null;
+                BitmapSource4Binding = null;
         }
 
         /// <summary>
@@ -201,7 +203,7 @@ namespace DesktopQRScanner.VModel
         /// </summary>
         private void AddQRCode2List()
         {
-            string t = ZXingHelper.ReadQRCode(ImageSource4Binding);
+            string t = ZXingHelper.ReadQRCode(BitmapSource4Binding);
             if (t != null)
             {
                 SelectedLinkItem = new LinkItem()

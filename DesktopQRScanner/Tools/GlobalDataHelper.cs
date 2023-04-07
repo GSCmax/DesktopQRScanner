@@ -2,10 +2,8 @@
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace DesktopQRScanner.Tools
 {
@@ -15,7 +13,7 @@ namespace DesktopQRScanner.Tools
         /// 当前App的版本信息（此语句不支持单包发布）
         /// </summary>
         //public static string Version = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).FileVersion + " .NET6.0";
-        public static string Version = "0.1.1.0 .NET6.0";
+        public static string Version = "0.2.0.0 .NET6.0";
 
         /// <summary>
         /// 存储当前App实例的配置信息
