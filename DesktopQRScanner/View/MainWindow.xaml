@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="#e2e2e2">
+            <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="#e2e2e2" ToolTip="软件版本与错误提示">
                 <TextBlock FontWeight="Bold" Text="{x:Static tools:GlobalDataHelper.Version}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
             </Border>
             <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="{StaticResource DangerBrush}" Visibility="{Binding ErrMsg, Converter={StaticResource S2VC}}">
@@ -60,11 +60,11 @@
                             <!--<TextBlock Text="使用暗色主题" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"/>-->
                             <TextBlock Text="链接自动打开" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
-                                       ToolTip="若启用，软件打开或扫描二维码后自动调用关联程序打开二维码链接。"/>
+                                       ToolTip="若启用，软件打开或扫描二维码图片后自动调用关联程序打开链接"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoOpenLink}"/>
                             <TextBlock Text="历史自动整理" Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
-                                       ToolTip="若启用，软件关闭时自动将标记为“收藏”的历史排序至历史记录最前端。"/>
+                                       ToolTip="若启用，软件关闭时自动将标记为“收藏”的历史排序至历史记录最前端"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoArrange}"/>
                             <TextBlock Text="历史保存数量" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
@@ -101,11 +101,11 @@
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
                 <Grid>
-                    <Image Source="{Binding BitmapSource4Binding}" Stretch="UniformToFill"
+                    <Image Source="{Binding BitmapSource4Binding}" Stretch="UniformToFill" ToolTip="右击可保存图片至本地"
                            Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}">
                         <Image.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="保存" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                <MenuItem Header="保存图片" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource SaveGeometry}"/>
                                     </MenuItem.Icon>
@@ -113,7 +113,7 @@
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
-                    <Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding openFileClickCommand}">
+                    <Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding openFileClickCommand}" ToolTip="点击选择图片文件">
                         <Button.Content>
                             <Path Height="30" Width="30" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Fill="{StaticResource PrimaryBrush}" Data="{StaticResource DeleteFillCircleGeometry}">
                                 <Path.RenderTransform>
@@ -207,12 +207,12 @@
                                     <Setter Property="ContextMenu">
                                         <Setter.Value>
                                             <ContextMenu>
-                                                <MenuItem Header="复制" Command="{Binding PlacementTarget.Tag.copyLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Header="复制文本" Command="{Binding PlacementTarget.Tag.copyLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="打开" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Header="打开链接" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource DialogBoxLauncherGeometry}"
                                                               RenderTransformOrigin="0.5,0.5">
@@ -222,19 +222,19 @@
                                                         </Path>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="生成" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Header="生成二维码" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource AlignVCenterGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Header="切换收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource StarGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="删除" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Header="删除" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{StaticResource DangerBrush}">
                                                     <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource CloseGeometry}"/>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource DangerBrush}" Stretch="Uniform" Data="{StaticResource DeleteFillCircleGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
                                             </ContextMenu>
@@ -259,7 +259,7 @@
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         <Path Grid.Column="0" Height="15" Margin="-5,0,0,0" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
-                                                      Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
+                                              Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
                                         <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
                                     </Grid>
                                     <DataTemplate.Triggers>
