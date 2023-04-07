@@ -20,6 +20,7 @@
                     <ImageDrawing o:Freeze="True" ImageSource="/DesktopQRScanner;component/Resources/cloud.png" Rect="0,0,157,157"/>
                 </DrawingBrush.Drawing>
             </DrawingBrush>
+            <DropShadowEffect x:Key="MyEffectShadow" o:Freeze="True" BlurRadius="25" ShadowDepth="8" Direction="270" Color="{StaticResource PrimaryColor}" Opacity=".2" RenderingBias="Performance" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
