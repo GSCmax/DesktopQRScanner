@@ -11,7 +11,8 @@
         Background="White" UseLayoutRounding="True"
         Icon="/DesktopQRScanner;component/Resources/icon.ico"
         WindowStartupLocation="CenterScreen" Topmost="True"
-        BorderThickness="0" ResizeMode="CanMinimize">
+        BorderThickness="0" ResizeMode="CanMinimize"
+        WindowState="{Binding MainWindowState}">
 
     <hc:Window.DataContext>
         <vm:MainWindowVModel/>
@@ -20,6 +21,7 @@
     <hc:Window.Resources>
         <local:ImageRotateConverter x:Key="IRC"/>
         <local:String2VisibilityConverter x:Key="S2VC"/>
+        <local:ImageToolTipConverter x:Key="ITTC"/>
     </hc:Window.Resources>
 
     <hc:Window.NonClientAreaContent>
@@ -102,7 +104,8 @@
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
                 <Grid>
                     <Image Source="{Binding BitmapSource4Binding}" Stretch="UniformToFill" ToolTip="右击可保存图片至本地"
-                           Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}">
+                           Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="保存图片" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
@@ -113,7 +116,7 @@
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
-                    <Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding openFileClickCommand}" ToolTip="点击选择图片文件">
+                    <Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}">
                         <Button.Content>
                             <Path Height="30" Width="30" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Fill="{StaticResource PrimaryBrush}" Data="{StaticResource DeleteFillCircleGeometry}">
                                 <Path.RenderTransform>

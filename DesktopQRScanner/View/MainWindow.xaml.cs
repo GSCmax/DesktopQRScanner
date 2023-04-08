@@ -39,6 +39,25 @@ namespace DesktopQRScanner.View
     }
 
     /// <summary>
+    /// 旋转二维码展示区打开图标
+    /// </summary>
+    public class ImageToolTipConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return "点击打开图像文件";
+            else
+                return "点击清除";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
     /// 旋转二维码展示区保存图标（未使用）
     /// </summary>
     public class SaveBTNShowConverter : IValueConverter

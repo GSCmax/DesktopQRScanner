@@ -21,6 +21,12 @@ namespace DesktopQRScanner.VModel
         }
 
         /// <summary>
+        /// 窗口状态
+        /// </summary>
+        [ObservableProperty]
+        private WindowState mainWindowState;
+
+        /// <summary>
         /// 错误提示文字
         /// </summary>
         [ObservableProperty]
@@ -98,12 +104,14 @@ namespace DesktopQRScanner.VModel
         [RelayCommand]
         private void screenShot()
         {
+            MainWindowState = WindowState.Minimized;
             ScreenshotOptions screenshotOptions = new ScreenshotOptions()
             {
-                BackgroundOpacity = 0.6,
+                BackgroundOpacity = 0.5,
                 SelectionRectangleBorderBrush = (System.Windows.Media.Brush)Application.Current.FindResource("PrimaryBrush")
             };
             BitmapSource4Binding = Screenshot.CaptureRegionToBitmapSource(screenshotOptions);
+            MainWindowState = WindowState.Normal;
             AddQRCode2List();
         }
 
