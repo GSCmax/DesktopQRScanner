@@ -7,7 +7,6 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -22,7 +21,11 @@ namespace DesktopQRScanner.VModel
             infoTimer.Elapsed += (s, e) => InfoMsg = null;
 
             if (GlobalDataHelper.bs != null)
-                BitmapSource4Binding = GlobalDataHelper.bs;
+                BitmapSource4Binding = new BitmapSource4BindingClass()
+                {
+                    NeedRaise = true,
+                    BitmapSourceData = GlobalDataHelper.bs
+                };
         }
 
         /// <summary>
@@ -37,7 +40,6 @@ namespace DesktopQRScanner.VModel
         [ObservableProperty]
         private string errMsg = null;
         partial void OnErrMsgChanged(string value) => errTimer.Start();
-
         public Timer errTimer = new Timer()
         {
             AutoReset = false,
@@ -50,7 +52,6 @@ namespace DesktopQRScanner.VModel
         [ObservableProperty]
         private string infoMsg = null;
         partial void OnInfoMsgChanged(string value) => infoTimer.Start();
-
         public Timer infoTimer = new Timer()
         {
             AutoReset = false,
@@ -89,18 +90,17 @@ namespace DesktopQRScanner.VModel
         /// Image绑定图像
         /// </summary>
         [ObservableProperty]
-        private BitmapSource bitmapSource4Binding = null;
-        partial void OnBitmapSource4BindingChanged(BitmapSource value)
+        private BitmapSource4BindingClass bitmapSource4Binding = null;
+        partial void OnBitmapSource4BindingChanged(BitmapSource4BindingClass value)
         {
-            if (BitmapSource4Binding != null)
+            if (BitmapSource4Binding != null && BitmapSource4Binding.NeedRaise)
             {
-                string t = ZXingHelper.ReadQRCode(BitmapSource4Binding);
-                if (t != null)
+                string qrtext = ZXingHelper.ReadQRCode(BitmapSource4Binding.BitmapSourceData);
+                if (qrtext != null)
                 {
                     SelectedLinkItem = new LinkItem()
                     {
-                        IsStared = false,
-                        Link = t,
+                        Link = qrtext,
                         LinkDateTime = DateTime.Now,
                     };
                     GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
@@ -124,7 +124,7 @@ namespace DesktopQRScanner.VModel
         {
             try
             {
-                Clipboard.SetImage(BitmapSource4Binding);
+                Clipboard.SetImage(BitmapSource4Binding.BitmapSourceData);
             }
             catch
             {
@@ -144,7 +144,7 @@ namespace DesktopQRScanner.VModel
             if (saveFileDialog.ShowDialog() == true)
             {
                 BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(BitmapSource4Binding));
+                encoder.Frames.Add(BitmapFrame.Create(BitmapSource4Binding.BitmapSourceData));
                 using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
                 {
                     encoder.Save(fileStream);
@@ -166,7 +166,11 @@ namespace DesktopQRScanner.VModel
                 BackgroundOpacity = 0.5,
                 SelectionRectangleBorderBrush = (System.Windows.Media.Brush)Application.Current.FindResource("PrimaryBrush")
             };
-            BitmapSource4Binding = Screenshot.CaptureRegionToBitmapSource(screenshotOptions);
+            BitmapSource4Binding = new BitmapSource4BindingClass()
+            {
+                NeedRaise = true,
+                BitmapSourceData = Screenshot.CaptureRegionToBitmapSource(screenshotOptions)
+            };
             MainWindowState = WindowState.Normal;
         }
 
@@ -177,7 +181,11 @@ namespace DesktopQRScanner.VModel
         private void fullScreenShot()
         {
             MainWindowState = WindowState.Minimized;
-            BitmapSource4Binding = Screenshot.CaptureAllScreens();
+            BitmapSource4Binding = new BitmapSource4BindingClass()
+            {
+                NeedRaise = true,
+                BitmapSourceData = Screenshot.CaptureAllScreens()
+            };
             MainWindowState = WindowState.Normal;
         }
 
@@ -227,7 +235,11 @@ namespace DesktopQRScanner.VModel
         [RelayCommand]
         private void genLink()
         {
-            BitmapSource4Binding = ZXingHelper.GenerateQRCode(SelectedLinkItem.Link);
+            BitmapSource4Binding = new BitmapSource4BindingClass()
+            {
+                NeedRaise = false,
+                BitmapSourceData = ZXingHelper.GenerateQRCode(SelectedLinkItem.Link)
+            };
         }
 
         /// <summary>
@@ -262,10 +274,23 @@ namespace DesktopQRScanner.VModel
                 openFileDialog.Filter = "图像文件 (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
 
                 if (openFileDialog.ShowDialog() == true)
-                    BitmapSource4Binding = new BitmapImage(new Uri(openFileDialog.FileName));
+                    BitmapSource4Binding = new BitmapSource4BindingClass()
+                    {
+                        NeedRaise = true,
+                        BitmapSourceData = new BitmapImage(new Uri(openFileDialog.FileName))
+                    };
             }
             else
                 BitmapSource4Binding = null;
         }
+    }
+
+    internal partial class BitmapSource4BindingClass : ObservableObject
+    {
+        [ObservableProperty]
+        private BitmapSource bitmapSourceData;
+
+        [ObservableProperty]
+        private bool needRaise;
     }
 }

@@ -6,15 +6,16 @@ namespace DesktopQRScanner.Model
     internal partial class LinkItem : ObservableObject
     {
         [ObservableProperty]
-        private DateTime linkDateTime;
-
-        [ObservableProperty]
         private string link;
 
         [ObservableProperty]
         private bool isStared;
 
         [ObservableProperty]
+        private DateTime linkDateTime;
+
+        [ObservableProperty]
+        [property: Newtonsoft.Json.JsonIgnore]
         private bool isSelected;
     }
 }

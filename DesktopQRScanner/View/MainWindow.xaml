@@ -111,9 +111,19 @@
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
                 <Grid>
-                    <Image Source="{Binding BitmapSource4Binding}" Stretch="UniformToFill" ToolTip="右击可复制或保存图像"
+                    <Image Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="UniformToFill"
                            Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"
                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image.ToolTip>
+                            <Grid Width="200" Margin="-4,0,-4,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Center" Text="右击可复制或保存图像"/>
+                                <Image Grid.Row="1" Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="Uniform"/>
+                            </Grid>
+                        </Image.ToolTip>
                         <Image.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
@@ -138,13 +148,6 @@
                             </Path>
                         </Button.Content>
                     </Button>
-                    <!--<Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding saveImageCommand}"
-                            Padding="0,0,-15,-15" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                            Visibility="{Binding BitmapSource4Binding, Converter={StaticResource SBSC}}">
-                        <Button.Content>
-                            <Path Height="20" Width="20" Stretch="Uniform" Fill="{StaticResource PrimaryBrush}" Data="{StaticResource SaveGeometry}"/>
-                        </Button.Content>
-                    </Button>-->
                 </Grid>
             </Border>
         </hc:TransitioningContentControl>
@@ -156,29 +159,26 @@
                 <ColumnDefinition Width="15"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
             <hc:TransitioningContentControl Grid.Column="0" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
             </hc:TransitioningContentControl>
             <hc:TransitioningContentControl Grid.Column="0" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Style="{StaticResource BorderClip}">
-                    <Button Width="200" Height="40" FontSize="18" Content="截图" BorderThickness="0"
+                    <Button Width="200" Height="40" FontSize="18" Content="矩形截图" BorderThickness="0"
                         Foreground="{StaticResource TextIconBrush}" Background="{StaticResource PrimaryBrush}"
                         Command="{Binding screenShotCommand}"/>
                 </Border>
             </hc:TransitioningContentControl>
-
             <hc:TransitioningContentControl Grid.Column="2" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
             </hc:TransitioningContentControl>
             <hc:TransitioningContentControl Grid.Column="2" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Style="{StaticResource BorderClip}">
-                    <Button Width="105" Height="40" FontSize="18" Content="全局截图" BorderThickness="0"
+                    <Button Width="105" Height="40" FontSize="18" Content="全屏截图" BorderThickness="0"
                         Foreground="{StaticResource TextIconBrush}" Background="{StaticResource PrimaryBrush}"
                         Command="{Binding fullScreenShotCommand}"/>
                 </Border>
             </hc:TransitioningContentControl>
-
         </Grid>
 
         <!--ListBox-->

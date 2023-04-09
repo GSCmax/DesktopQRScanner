@@ -1,5 +1,4 @@
 ﻿using DesktopQRScanner.Tools;
-using DesktopQRScanner.View;
 using DesktopQRScanner.VModel;
 using HinsHo.ScreenShot.CSharp;
 using System.Windows;
