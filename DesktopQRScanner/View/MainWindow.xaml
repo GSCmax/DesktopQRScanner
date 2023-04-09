@@ -44,7 +44,7 @@
             <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{StaticResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
-            <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-107" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
+            <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-143" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
                 <hc:TransitioningContentControl Grid.Column="0" Grid.Row="1" TransitionMode="Top2Bottom">
                     <Border Background="{DynamicResource ThirdlyRegionBrush}" CornerRadius="0,0,10,10" Margin="5,0,5,5" Effect="{StaticResource EffectShadow2}">
                         <Grid>
