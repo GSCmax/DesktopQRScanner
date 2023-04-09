@@ -78,6 +78,24 @@ namespace DesktopQRScanner.VModel
         [ObservableProperty]
         private BitmapSource bitmapSource4Binding = null;
 
+        #region 二维码右键菜单
+
+        /// <summary>
+        /// 复制二维码
+        /// </summary>
+        [RelayCommand]
+        private void copyImage()
+        {
+            try
+            {
+                Clipboard.SetImage(BitmapSource4Binding);
+            }
+            catch
+            {
+                throw new Exception("系统剪切板异常");
+            }
+        }
+
         /// <summary>
         /// 保存二维码
         /// </summary>
@@ -97,6 +115,8 @@ namespace DesktopQRScanner.VModel
                 }
             }
         }
+
+        #endregion
 
         /// <summary>
         /// 截图
@@ -151,7 +171,6 @@ namespace DesktopQRScanner.VModel
             {
                 throw new Exception("系统剪切板异常");
             }
-
         }
 
         /// <summary>

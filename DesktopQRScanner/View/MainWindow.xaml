@@ -108,12 +108,17 @@
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
                 <Grid>
-                    <Image Source="{Binding BitmapSource4Binding}" Stretch="UniformToFill" ToolTip="右击可保存图片至本地"
+                    <Image Source="{Binding BitmapSource4Binding}" Stretch="UniformToFill" ToolTip="右击可复制或保存图像"
                            Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"
                            HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="保存图片" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                <MenuItem Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                    <MenuItem.Icon>
+                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="保存图像" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource SaveGeometry}"/>
                                     </MenuItem.Icon>
@@ -260,7 +265,7 @@
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource StarGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="删除" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{StaticResource DangerBrush}">
+                                                <MenuItem Header="删除记录" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{StaticResource DangerBrush}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource DangerBrush}" Stretch="Uniform" Data="{StaticResource DeleteFillCircleGeometry}"/>
                                                     </MenuItem.Icon>
