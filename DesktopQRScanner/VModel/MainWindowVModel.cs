@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -17,7 +18,11 @@ namespace DesktopQRScanner.VModel
     {
         public MainWindowVModel()
         {
-            errTimer.Elapsed += ErrTimer_Elapsed;
+            errTimer.Elapsed += (s, e) => ErrMsg = null;
+            infoTimer.Elapsed += (s, e) => InfoMsg = null;
+
+            if (GlobalDataHelper.bs != null)
+                BitmapSource4Binding = GlobalDataHelper.bs;
         }
 
         /// <summary>
@@ -31,6 +36,7 @@ namespace DesktopQRScanner.VModel
         /// </summary>
         [ObservableProperty]
         private string errMsg = null;
+        partial void OnErrMsgChanged(string value) => errTimer.Start();
 
         public Timer errTimer = new Timer()
         {
@@ -39,14 +45,17 @@ namespace DesktopQRScanner.VModel
         };
 
         /// <summary>
-        /// 清除错误提示
+        /// 提示文字
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ErrTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        [ObservableProperty]
+        private string infoMsg = null;
+        partial void OnInfoMsgChanged(string value) => infoTimer.Start();
+
+        public Timer infoTimer = new Timer()
         {
-            ErrMsg = null;
-        }
+            AutoReset = false,
+            Interval = 3000,
+        };
 
         /// <summary>
         /// Github按钮点击
@@ -56,6 +65,8 @@ namespace DesktopQRScanner.VModel
         {
             Process.Start(new ProcessStartInfo() { FileName = @"https://github.com/GSCmax/DesktopQRScanner", UseShellExecute = true });
         }
+
+        #region 设置Popup
 
         /// <summary>
         /// 设置Pop展开状态
@@ -72,11 +83,36 @@ namespace DesktopQRScanner.VModel
             ShowPop = true;
         }
 
+        #endregion
+
         /// <summary>
         /// Image绑定图像
         /// </summary>
         [ObservableProperty]
         private BitmapSource bitmapSource4Binding = null;
+        partial void OnBitmapSource4BindingChanged(BitmapSource value)
+        {
+            if (BitmapSource4Binding != null)
+            {
+                string t = ZXingHelper.ReadQRCode(BitmapSource4Binding);
+                if (t != null)
+                {
+                    SelectedLinkItem = new LinkItem()
+                    {
+                        IsStared = false,
+                        Link = t,
+                        LinkDateTime = DateTime.Now,
+                    };
+                    GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
+                    if (GlobalDataHelper.appConfig.AutoOpenLink)
+                        openLink();
+                }
+                else
+                {
+                    InfoMsg = "未能识别二维码";
+                }
+            }
+        }
 
         #region 二维码右键菜单
 
@@ -132,8 +168,6 @@ namespace DesktopQRScanner.VModel
             };
             BitmapSource4Binding = Screenshot.CaptureRegionToBitmapSource(screenshotOptions);
             MainWindowState = WindowState.Normal;
-            if (BitmapSource4Binding != null)
-                AddQRCode2List();
         }
 
         /// <summary>
@@ -145,8 +179,6 @@ namespace DesktopQRScanner.VModel
             MainWindowState = WindowState.Minimized;
             BitmapSource4Binding = Screenshot.CaptureAllScreens();
             MainWindowState = WindowState.Normal;
-            if (BitmapSource4Binding != null)
-                AddQRCode2List();
         }
 
         /// <summary>
@@ -185,7 +217,7 @@ namespace DesktopQRScanner.VModel
             }
             catch
             {
-                throw new Exception("无法打开此链接");
+                InfoMsg = "无法打开此链接";
             }
         }
 
@@ -230,37 +262,10 @@ namespace DesktopQRScanner.VModel
                 openFileDialog.Filter = "图像文件 (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
 
                 if (openFileDialog.ShowDialog() == true)
-                {
                     BitmapSource4Binding = new BitmapImage(new Uri(openFileDialog.FileName));
-                    AddQRCode2List();
-                }
             }
             else
                 BitmapSource4Binding = null;
-        }
-
-        /// <summary>
-        /// QR扫描
-        /// </summary>
-        public void AddQRCode2List()
-        {
-            string t = ZXingHelper.ReadQRCode(BitmapSource4Binding);
-            if (t != null)
-            {
-                SelectedLinkItem = new LinkItem()
-                {
-                    IsStared = false,
-                    Link = t,
-                    LinkDateTime = DateTime.Now,
-                };
-                GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
-                if (GlobalDataHelper.appConfig.AutoOpenLink)
-                    openLink();
-            }
-            else
-            {
-                throw new Exception("未能识别二维码");
-            }
         }
     }
 }

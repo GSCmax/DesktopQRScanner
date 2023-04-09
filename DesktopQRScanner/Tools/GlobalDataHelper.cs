@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.Tools
 {
@@ -14,6 +15,11 @@ namespace DesktopQRScanner.Tools
         /// </summary>
         //public static string Version = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).FileVersion + " .NET6.0";
         public static string Version = "0.2.2.0 .NET6.0";
+
+        /// <summary>
+        /// 存储当前App实例启动截图
+        /// </summary>
+        public static BitmapSource bs = null;
 
         /// <summary>
         /// 存储当前App实例的配置信息

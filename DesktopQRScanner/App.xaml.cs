@@ -19,14 +19,14 @@ namespace DesktopQRScanner
             {
                 var mainWindowDataContext = Application.Current.MainWindow.DataContext as MainWindowVModel;
                 mainWindowDataContext.ErrMsg = e.Exception.Message;
-                mainWindowDataContext.errTimer.Start();
+
                 e.Handled = true;
             };
 
             GlobalDataHelper.Init();
 
-            var mw = new MainWindow(GlobalDataHelper.appConfig.AutoFullScreenShotOnStart ? Screenshot.CaptureAllScreens() : null);
-            mw.Show();
+            if (GlobalDataHelper.appConfig.AutoFullScreenShotOnStart)
+                GlobalDataHelper.bs = Screenshot.CaptureAllScreens();
         }
 
         protected override void OnExit(ExitEventArgs e)

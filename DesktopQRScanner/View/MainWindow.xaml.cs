@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.View
@@ -13,18 +14,11 @@ namespace DesktopQRScanner.View
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : HandyControl.Controls.Window
     {
-        public MainWindow(BitmapSource bitmapSource)
+        public MainWindow()
         {
             InitializeComponent();
-
-            if (bitmapSource != null)
-                Loaded += (s, e) =>
-                {
-                    (DataContext as MainWindowVModel).BitmapSource4Binding = bitmapSource;
-                    (DataContext as MainWindowVModel).AddQRCode2List();
-                };
         }
     }
 
