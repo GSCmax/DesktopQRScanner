@@ -20,6 +20,11 @@ namespace DesktopQRScanner.Model
         public bool AutoArrange { get; set; } = true;
 
         /// <summary>
+        /// 启动时自动截取全屏
+        /// </summary>
+        public bool AutoFullScreenShotOnStart { get; set; } = true;
+
+        /// <summary>
         /// 历史记录数量
         /// </summary>
         public int HistorySaveCount { get; set; } = 50;

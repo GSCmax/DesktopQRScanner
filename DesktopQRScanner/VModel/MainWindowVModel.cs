@@ -112,7 +112,21 @@ namespace DesktopQRScanner.VModel
             };
             BitmapSource4Binding = Screenshot.CaptureRegionToBitmapSource(screenshotOptions);
             MainWindowState = WindowState.Normal;
-            AddQRCode2List();
+            if (BitmapSource4Binding != null)
+                AddQRCode2List();
+        }
+
+        /// <summary>
+        /// 全局截图
+        /// </summary>
+        [RelayCommand]
+        private void fullScreenShot()
+        {
+            MainWindowState = WindowState.Minimized;
+            BitmapSource4Binding = Screenshot.CaptureAllScreens();
+            MainWindowState = WindowState.Normal;
+            if (BitmapSource4Binding != null)
+                AddQRCode2List();
         }
 
         /// <summary>
@@ -209,7 +223,7 @@ namespace DesktopQRScanner.VModel
         /// <summary>
         /// QR扫描
         /// </summary>
-        private void AddQRCode2List()
+        public void AddQRCode2List()
         {
             string t = ZXingHelper.ReadQRCode(BitmapSource4Binding);
             if (t != null)

@@ -7,7 +7,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources/icon.ico</ApplicationIcon>
     <Authors>管省超</Authors>
-    <Version>0.2.1.0</Version>
+    <Version>0.2.2.0</Version>
     <Copyright>Copyright © GSC 2023</Copyright>
     <RepositoryUrl>https://github.com/GSCmax/DesktopQRScanner</RepositoryUrl>
   </PropertyGroup>
@@ -15,7 +15,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="HandyControl" Version="3.4.0" />
-    <PackageReference Include="HinsHo.ScreenShot.CSharp" Version="0.2.1" />
+    <PackageReference Include="HinsHo.ScreenShot.CSharp" Version="0.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ZXing.Net" Version="0.16.9" />
     <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />

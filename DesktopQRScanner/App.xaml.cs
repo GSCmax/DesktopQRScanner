@@ -1,5 +1,7 @@
 ﻿using DesktopQRScanner.Tools;
+using DesktopQRScanner.View;
 using DesktopQRScanner.VModel;
+using HinsHo.ScreenShot.CSharp;
 using System.Windows;
 
 namespace DesktopQRScanner
@@ -13,18 +15,18 @@ namespace DesktopQRScanner
         {
             base.OnStartup(e);
 
-            DispatcherUnhandledException += App_DispatcherUnhandledException;
+            DispatcherUnhandledException += (s, e) =>
+            {
+                var mainWindowDataContext = Application.Current.MainWindow.DataContext as MainWindowVModel;
+                mainWindowDataContext.ErrMsg = e.Exception.Message;
+                mainWindowDataContext.errTimer.Start();
+                e.Handled = true;
+            };
 
             GlobalDataHelper.Init();
-        }
 
-        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-        {
-            var mainWindowDataContext = Application.Current.MainWindow.DataContext as MainWindowVModel;
-            mainWindowDataContext.ErrMsg = e.Exception.Message;
-            mainWindowDataContext.errTimer.Start();
-
-            e.Handled = true;
+            var mw = new MainWindow(GlobalDataHelper.appConfig.AutoFullScreenShotOnStart ? Screenshot.CaptureAllScreens() : null);
+            mw.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)

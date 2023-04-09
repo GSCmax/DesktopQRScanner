@@ -1,10 +1,12 @@
 ﻿using DesktopQRScanner.Model;
+using DesktopQRScanner.VModel;
 using System;
 using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.View
 {
@@ -13,9 +15,16 @@ namespace DesktopQRScanner.View
     /// </summary>
     public partial class MainWindow
     {
-        public MainWindow()
+        public MainWindow(BitmapSource bitmapSource)
         {
             InitializeComponent();
+
+            if (bitmapSource != null)
+                Loaded += (s, e) =>
+                {
+                    (DataContext as MainWindowVModel).BitmapSource4Binding = bitmapSource;
+                    (DataContext as MainWindowVModel).AddQRCode2List();
+                };
         }
     }
 
