@@ -2,8 +2,10 @@
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.Tools
@@ -11,10 +13,9 @@ namespace DesktopQRScanner.Tools
     internal class GlobalDataHelper
     {
         /// <summary>
-        /// 当前App的版本信息（此语句不支持单包发布）
+        /// 当前App的版本信息
         /// </summary>
-        //public static string Version = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).FileVersion + " .NET6.0";
-        public static string Version = "0.2.3.0 .NET6.0";
+        public static string Version = Assembly.GetEntryAssembly().GetName().Version.ToString() + (Debugger.IsAttached ? " Debug" : " Release");
 
         /// <summary>
         /// 存储当前App实例启动截图
