@@ -43,7 +43,7 @@
             </Border>
             <Button Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{StaticResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource GithubGeometry}"
-                    Style="{StaticResource ButtonIcon}" Command="{Binding showGithubClickCommand}" ToolTip="前往项目开源地址，欢迎加星😀"/>
+                    Style="{StaticResource ButtonIcon}" Command="{Binding showGithubClickCommand}" ToolTip="点击前往项目开源地址，欢迎加星😀"/>
             <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{StaticResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
