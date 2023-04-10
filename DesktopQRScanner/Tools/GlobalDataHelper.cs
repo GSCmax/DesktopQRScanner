@@ -14,7 +14,7 @@ namespace DesktopQRScanner.Tools
         /// 当前App的版本信息（此语句不支持单包发布）
         /// </summary>
         //public static string Version = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).FileVersion + " .NET6.0";
-        public static string Version = "0.2.2.0 .NET6.0";
+        public static string Version = "0.2.3.0 .NET6.0";
 
         /// <summary>
         /// 存储当前App实例启动截图

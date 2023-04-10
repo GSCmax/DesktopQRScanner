@@ -1,10 +1,12 @@
 ﻿using DesktopQRScanner.Model;
+using DesktopQRScanner.VModel;
 using System;
 using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.View
 {
@@ -16,6 +18,58 @@ namespace DesktopQRScanner.View
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void imageFile_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string file = (e.Data.GetData(DataFormats.FileDrop) as string[])[0];
+                string extension = System.IO.Path.GetExtension(file).ToLower();
+                switch (extension)
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".bmp":
+                        e.Effects = DragDropEffects.Copy;
+                        e.Handled = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void imageFile_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string file = (e.Data.GetData(DataFormats.FileDrop) as string[])[0];
+                string extension = System.IO.Path.GetExtension(file).ToLower();
+                switch (extension)
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".bmp":
+                        try
+                        {
+                            (DataContext as MainWindowVModel).BitmapSource4Binding = new BitmapSource4BindingClass()
+                            {
+                                NeedRaise = true,
+                                BitmapSourceData = new BitmapImage(new Uri(file))
+                            };
+                        }
+                        catch
+                        {
+                            (DataContext as MainWindowVModel).ErrMsg = "无法从流中读取";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 

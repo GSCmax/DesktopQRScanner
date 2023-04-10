@@ -274,11 +274,18 @@ namespace DesktopQRScanner.VModel
                 openFileDialog.Filter = "图像文件 (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
 
                 if (openFileDialog.ShowDialog() == true)
-                    BitmapSource4Binding = new BitmapSource4BindingClass()
+                    try
                     {
-                        NeedRaise = true,
-                        BitmapSourceData = new BitmapImage(new Uri(openFileDialog.FileName))
-                    };
+                        BitmapSource4Binding = new BitmapSource4BindingClass()
+                        {
+                            NeedRaise = true,
+                            BitmapSourceData = new BitmapImage(new Uri(openFileDialog.FileName))
+                        };
+                    }
+                    catch
+                    {
+                        ErrMsg = "无法从流中读取";
+                    }
             }
             else
                 BitmapSource4Binding = null;
