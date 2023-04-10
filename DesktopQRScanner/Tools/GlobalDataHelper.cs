@@ -13,9 +13,14 @@ namespace DesktopQRScanner.Tools
     internal class GlobalDataHelper
     {
         /// <summary>
-        /// 当前App的版本信息
+        /// 当前App的版本信息与调试信息
         /// </summary>
-        public static string Version = Assembly.GetEntryAssembly().GetName().Version.ToString() + (Debugger.IsAttached ? " Debug" : " Release");
+#if DEBUG
+        private static bool IsDebugMode = true;
+#else
+        private static bool IsDebugMode = false;
+#endif
+        public static string Version = Assembly.GetEntryAssembly().GetName().Version.ToString() + (Debugger.IsAttached ? " Attach" : (IsDebugMode ? " Debug" : " Release"));
 
         /// <summary>
         /// 存储当前App实例启动截图
