@@ -100,9 +100,9 @@ namespace DesktopQRScanner.View
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
-                return "拖动图像文件到此处或点击选择图像文件以打开";
+                return "拖拽图像至此处或点击选择图像文件以打开";
             else
-                return "拖动图像文件到此处或点击清除";
+                return "拖拽图像至此处或点击清除";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
