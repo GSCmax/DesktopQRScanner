@@ -56,15 +56,17 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="2"/>
                             </Grid.RowDefinitions>
-                            <!--<TextBlock Text="使用暗色主题" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
-                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"/>-->
+                            <TextBlock Text="使用暗色主题" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
+                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
+                                          IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"/>
                             <TextBlock Text="二维码链接自动打开" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="若启用，软件打开或扫描二维码图片后自动调用关联程序打开链接"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
@@ -78,9 +80,13 @@
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="3" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoArrange}"/>
                             <TextBlock Text="历史记录保存数量" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
-                            <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Margin="0,0,5,0"
+                            <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="60" Maximum="500" Minimum="0" FontSize="13"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=HistorySaveCount}"/>
+                            <TextBlock Text="最小化动画等待时间" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
+                            <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="5" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
+                                              Width="60" Maximum="500" Minimum="0" FontSize="13"
+                                              Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=MinimizeWaitDelay}"/>
                         </Grid>
                     </Border>
                 </hc:TransitioningContentControl>

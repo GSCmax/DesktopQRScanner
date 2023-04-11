@@ -7,9 +7,10 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Timers;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Timer = System.Timers.Timer;
 
 namespace DesktopQRScanner.VModel
 {
@@ -161,16 +162,19 @@ namespace DesktopQRScanner.VModel
         private void screenShot()
         {
             MainWindowState = WindowState.Minimized;
+            Thread.Sleep(GlobalDataHelper.appConfig.MinimizeWaitDelay);
             ScreenshotOptions screenshotOptions = new ScreenshotOptions()
             {
                 BackgroundOpacity = 0.5,
                 SelectionRectangleBorderBrush = (System.Windows.Media.Brush)Application.Current.FindResource("PrimaryBrush")
             };
-            BitmapSource4Binding = new BitmapSource4BindingClass()
-            {
-                NeedRaise = true,
-                BitmapSourceData = Screenshot.CaptureRegionToBitmapSource(screenshotOptions)
-            };
+            var data = Screenshot.CaptureRegionToBitmapSource(screenshotOptions);
+            if (data != null)
+                BitmapSource4Binding = new BitmapSource4BindingClass()
+                {
+                    NeedRaise = true,
+                    BitmapSourceData = data
+                };
             MainWindowState = WindowState.Normal;
         }
 
@@ -181,6 +185,7 @@ namespace DesktopQRScanner.VModel
         private void fullScreenShot()
         {
             MainWindowState = WindowState.Minimized;
+            Thread.Sleep(GlobalDataHelper.appConfig.MinimizeWaitDelay);
             BitmapSource4Binding = new BitmapSource4BindingClass()
             {
                 NeedRaise = true,

@@ -10,6 +10,11 @@ namespace DesktopQRScanner.Model
         public static readonly string SavePath = $"{AppDomain.CurrentDomain.BaseDirectory}Config.json";
 
         /// <summary>
+        /// 使用暗色主题
+        /// </summary>
+        public bool UseDarkTheme { get; set; } = false;
+
+        /// <summary>
         /// 自动打开链接
         /// </summary>
         public bool AutoOpenLink { get; set; } = true;
@@ -28,5 +33,10 @@ namespace DesktopQRScanner.Model
         /// 历史记录数量
         /// </summary>
         public int HistorySaveCount { get; set; } = 50;
+
+        /// <summary>
+        /// 等待最小化动画完成时间
+        /// </summary>
+        public int MinimizeWaitDelay { get; set; } = 200;
     }
 }
