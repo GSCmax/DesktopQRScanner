@@ -8,7 +8,7 @@
         xmlns:tools="clr-namespace:DesktopQRScanner.Tools"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Title="二维码扫描小工具" SizeToContent="WidthAndHeight"
-        Background="White" UseLayoutRounding="True"
+        UseLayoutRounding="True"
         Icon="/DesktopQRScanner;component/Resources/icon.ico"
         WindowStartupLocation="CenterScreen" Topmost="True"
         BorderThickness="0" ResizeMode="CanMinimize"
@@ -199,8 +199,8 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Background="{StaticResource TextIconBrush}">
-                        <TextBlock Margin="0,3,0,0" Style="{StaticResource TextBlockDefault}" Foreground="{StaticResource PrimaryTextBrush}" Text="历史记录" FontSize="18"/>
+                    <Border Grid.Row="0">
+                        <TextBlock Margin="0,3,0,0" Style="{StaticResource TextBlockDefault}" Text="历史记录" FontSize="18"/>
                     </Border>
                     <Border Grid.Row="1">
                         <ListBox BorderThickness="0" Style="{StaticResource ListBox.Small}" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" SelectedItem="{Binding SelectedLinkItem}">
