@@ -1,8 +1,10 @@
 ﻿using DesktopQRScanner.Tools;
 using DesktopQRScanner.VModel;
 using HandyControl.Data;
+using HandyControl.Themes;
 using HandyControl.Tools;
 using HinsHo.ScreenShot.CSharp;
+using System;
 using System.Windows;
 
 namespace DesktopQRScanner
@@ -42,8 +44,12 @@ namespace DesktopQRScanner
 
         internal void UpdateSkin(SkinType skin)
         {
-            Resources.MergedDictionaries.RemoveAt(0);
-            Resources.MergedDictionaries.Insert(0, ResourceHelper.GetSkin(skin));
+            Resources.MergedDictionaries.Clear();
+            Resources.MergedDictionaries.Add(ResourceHelper.GetSkin(skin));
+            Resources.MergedDictionaries.Add(new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/HandyControl;component/Themes/Theme.xaml")
+            });
 
             Current.MainWindow?.OnApplyTemplate();
         }
