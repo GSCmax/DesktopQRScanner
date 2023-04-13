@@ -18,7 +18,7 @@ namespace DesktopQRScanner
 
             DispatcherUnhandledException += (s, e) =>
             {
-                var mainWindowDataContext = Application.Current.MainWindow.DataContext as MainWindowVModel;
+                var mainWindowDataContext = Current.MainWindow?.DataContext as MainWindowVModel;
                 mainWindowDataContext.ErrMsg = e.Exception.Message;
 
                 e.Handled = true;

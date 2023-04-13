@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopQRScanner.Model;
 using DesktopQRScanner.Tools;
+using HandyControl.Data;
 using HinsHo.ScreenShot.CSharp;
 using Microsoft.Win32;
 using System;
@@ -113,6 +114,16 @@ namespace DesktopQRScanner.VModel
                     InfoMsg = "未能识别二维码";
                 }
             }
+        }
+
+        /// <summary>
+        /// 主题切换
+        /// </summary>
+        /// <param name="isDark"></param>
+        [RelayCommand]
+        private void skinToggle(bool isDark)
+        {
+            (Application.Current as App).UpdateSkin(isDark ? SkinType.Dark : SkinType.Default);
         }
 
         #region 二维码右键菜单

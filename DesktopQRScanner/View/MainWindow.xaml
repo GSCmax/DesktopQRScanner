@@ -49,7 +49,7 @@
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
             <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-143" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
                 <hc:TransitioningContentControl Grid.Column="0" Grid.Row="1" TransitionMode="Top2Bottom">
-                    <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="0,0,10,10" Margin="5,0,5,5" Effect="{StaticResource EffectShadow2}">
+                    <Border Background="{StaticResource SecondaryRegionBrush}" CornerRadius="0,0,10,10" Margin="5,0,5,5" Effect="{StaticResource EffectShadow2}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -66,7 +66,8 @@
                             </Grid.RowDefinitions>
                             <TextBlock Text="使用暗色主题" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
-                                          IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"/>
+                                          IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"
+                                          Command="{Binding skinToggleCommand}" CommandParameter="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"/>
                             <TextBlock Text="二维码链接自动打开" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="若启用，软件打开或扫描二维码图片后自动调用关联程序打开链接"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
@@ -112,7 +113,7 @@
 
         <!--ImageSelector-->
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
-            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
+            <Border CornerRadius="15" Background="{StaticResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
         </hc:TransitioningContentControl>
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
@@ -167,7 +168,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <hc:TransitioningContentControl Grid.Column="0" TransitionMode="Bottom2TopWithFade">
-                <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
+                <Border CornerRadius="15" Background="{StaticResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
             </hc:TransitioningContentControl>
             <hc:TransitioningContentControl Grid.Column="0" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Style="{StaticResource BorderClip}">
@@ -177,7 +178,7 @@
                 </Border>
             </hc:TransitioningContentControl>
             <hc:TransitioningContentControl Grid.Column="2" TransitionMode="Bottom2TopWithFade">
-                <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
+                <Border CornerRadius="15" Background="{StaticResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
             </hc:TransitioningContentControl>
             <hc:TransitioningContentControl Grid.Column="2" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Style="{StaticResource BorderClip}">
@@ -190,7 +191,7 @@
 
         <!--ListBox-->
         <hc:TransitioningContentControl Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" TransitionMode="Bottom2TopWithFade">
-            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
+            <Border CornerRadius="15" Background="{StaticResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
         </hc:TransitioningContentControl>
         <hc:TransitioningContentControl Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" TransitionMode="Right2LeftWithFade">
             <Border CornerRadius="15" Style="{StaticResource BorderClip}">
