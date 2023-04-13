@@ -7,11 +7,11 @@
         xmlns:vm="clr-namespace:DesktopQRScanner.VModel"
         xmlns:tools="clr-namespace:DesktopQRScanner.Tools"
         xmlns:hc="https://handyorg.github.io/handycontrol"
-        mc:Ignorable="d" Title="二维码扫描小工具" SizeToContent="WidthAndHeight"
-        UseLayoutRounding="True"
+        mc:Ignorable="d" Title="二维码扫描小工具"
         Icon="/DesktopQRScanner;component/Resources/icon.ico"
         WindowStartupLocation="CenterScreen" Topmost="True"
         BorderThickness="0" ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight" UseLayoutRounding="True"
         WindowState="{Binding MainWindowState}">
 
     <hc:Window.DataContext>
@@ -32,8 +32,8 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="#e2e2e2" ToolTip="软件版本与消息提示">
-                <TextBlock FontWeight="Bold" Text="{x:Static tools:GlobalDataHelper.Version}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
+            <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="{StaticResource SecondaryRegionBrush}" ToolTip="软件版本与消息提示">
+                <TextBlock FontWeight="Bold" Text="{x:Static tools:GlobalDataHelper.Version}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
             <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="{StaticResource PrimaryBrush}" Visibility="{Binding InfoMsg, Converter={StaticResource S2VC}}">
                 <TextBlock FontWeight="Bold" Text="{Binding InfoMsg}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
@@ -49,7 +49,7 @@
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
             <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-143" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
                 <hc:TransitioningContentControl Grid.Column="0" Grid.Row="1" TransitionMode="Top2Bottom">
-                    <Border Background="{DynamicResource ThirdlyRegionBrush}" CornerRadius="0,0,10,10" Margin="5,0,5,5" Effect="{StaticResource EffectShadow2}">
+                    <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="0,0,10,10" Margin="5,0,5,5" Effect="{StaticResource EffectShadow2}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -132,12 +132,12 @@
                         </Image.ToolTip>
                         <Image.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="保存图像" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="保存图像" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource SaveGeometry}"/>
                                     </MenuItem.Icon>
@@ -250,12 +250,12 @@
                                     <Setter Property="ContextMenu">
                                         <Setter.Value>
                                             <ContextMenu>
-                                                <MenuItem Header="复制文本" Command="{Binding PlacementTarget.Tag.copyLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制文本" Command="{Binding PlacementTarget.Tag.copyLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="打开链接" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="打开链接" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource DialogBoxLauncherGeometry}"
                                                               RenderTransformOrigin="0.5,0.5">
@@ -265,17 +265,17 @@
                                                         </Path>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="生成二维码" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="生成二维码" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource AlignVCenterGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="切换收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="切换收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource StarGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="删除记录" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{StaticResource DangerBrush}">
+                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="删除记录" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{StaticResource DangerBrush}">
                                                     <MenuItem.Icon>
                                                         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{StaticResource DangerBrush}" Stretch="Uniform" Data="{StaticResource DeleteFillCircleGeometry}"/>
                                                     </MenuItem.Icon>
@@ -283,15 +283,6 @@
                                             </ContextMenu>
                                         </Setter.Value>
                                     </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#e2e2e2"/>
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
-                                            <Setter Property="Foreground" Value="{StaticResource SecondaryRegionBrush}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
                                 </Style>
                             </ListBox.ItemContainerStyle>
                             <ListBox.ItemTemplate>
