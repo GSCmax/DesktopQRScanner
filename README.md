@@ -1,6 +1,8 @@
 # DesktopQRScanner Windows二维码扫描小工具
 
-![图片](https://user-images.githubusercontent.com/8372598/230774156-cfa5137d-5401-427a-8ffb-aeba4e7f570b.png)
+![图片](https://user-images.githubusercontent.com/8372598/231784099-e1e86804-ac08-44d0-a9d6-49ab75ff72c6.png)
+
+![图片](https://user-images.githubusercontent.com/8372598/231784190-9c296f31-ebbe-4702-96d6-d16919db222e.png)
 
 本项目使用.NET6.0开发，集成二维码扫描、历史记录管理、二维码重新生成等功能。无广告，不联网。
 
@@ -11,13 +13,3 @@
 右侧列表区域提供简单的管理功能。
 
 本项目引用CommunityToolkit.Mvvm、HandyControl、Newtonsoft.Json、ZXing.Net、HinsHo.ScreenShot.CSharp，感谢这些开源库及其作者们的辛勤付出。
-
-本项目的HandyControl样式库存在自定义，请参照<https://github.com/GSCmax/HandyControl>。
-
-编译方法：
-
-1、克隆<https://github.com/GSCmax/DesktopQRScanner>，使用VS2022打开项目，等待VS还原Nuget程序包；
-
-2、克隆<https://github.com/GSCmax/HandyControl>，使用VS2022编译Release，复制HandyControl\src\Net_GE45\HandyControl_Net_GE45\bin\Release\net6.0-windows下除文件夹之外的四个文件至C:\Users\你的用户名\\.nuget\packages\handycontrol\3.4.0\lib\net6.0\下，替换原有项目；
-
-3、编译本项目。
