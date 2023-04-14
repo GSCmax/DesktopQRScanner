@@ -75,7 +75,14 @@ namespace DesktopQRScanner.VModel
         [RelayCommand]
         private void openHistoryFile()
         {
-            Process.Start(new ProcessStartInfo() { FileName = $"{AppDomain.CurrentDomain.BaseDirectory}Historys.json", UseShellExecute = true });
+            try
+            {
+                Process.Start(new ProcessStartInfo() { FileName = $"{AppDomain.CurrentDomain.BaseDirectory}Historys.json", UseShellExecute = true });
+            }
+            catch
+            {
+                ErrMsg = "未找到历史记录";
+            }
         }
 
         #region 设置Popup
