@@ -69,6 +69,15 @@ namespace DesktopQRScanner.VModel
             Process.Start(new ProcessStartInfo() { FileName = @"https://github.com/GSCmax/DesktopQRScanner", UseShellExecute = true });
         }
 
+        /// <summary>
+        /// 打开历史记录文件
+        /// </summary>
+        [RelayCommand]
+        private void openHistoryFile()
+        {
+            Process.Start(new ProcessStartInfo() { FileName = $"{AppDomain.CurrentDomain.BaseDirectory}Historys.json", UseShellExecute = true });
+        }
+
         #region 设置Popup
 
         /// <summary>

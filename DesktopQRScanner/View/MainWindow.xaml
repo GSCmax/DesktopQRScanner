@@ -68,19 +68,28 @@
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"
                                           Command="{Binding skinToggleCommand}" CommandParameter="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"/>
-                            <TextBlock Text="二维码链接自动打开" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
-                                       ToolTip="若启用，软件打开或扫描二维码图片后自动调用关联程序打开链接"/>
-                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
-                                          IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoOpenLink}"/>
-                            <TextBlock Text="启动时执行全局截图" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
+                            <TextBlock Text="启动时执行全局截图" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="若启用，软件启动时将执行一次全局截图"/>
-                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
+                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoFullScreenShotOnStart}"/>
-                            <TextBlock Text="历史记录自动整理" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
-                                       ToolTip="若启用，软件关闭时将标记为“收藏”的历史排序至历史记录最前端"/>
+                            <TextBlock Text="二维码链接自动打开" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
+                                       ToolTip="若启用，软件打开或扫描二维码图片后自动调用关联程序打开链接"/>
+                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
+                                          IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoOpenLink}"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3">
+                                <TextBlock Style="{StaticResource TextBlockDefault}" Margin="5,0,0,0">
+                                    <Hyperlink Command="{Binding openHistoryFileCommand}">历史记录</Hyperlink>
+                                </TextBlock>
+                                <TextBlock Text="自动整理" Style="{StaticResource TextBlockDefault}" Margin="0,0,5,0" ToolTip="若启用，软件关闭时将标记为“收藏”的历史排序至历史记录最前端"/>
+                            </StackPanel>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="3" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoArrange}"/>
-                            <TextBlock Text="历史记录保存数量" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4">
+                                <TextBlock Style="{StaticResource TextBlockDefault}" Margin="5,0,0,0">
+                                    <Hyperlink Command="{Binding openHistoryFileCommand}">历史记录</Hyperlink>
+                                </TextBlock>
+                                <TextBlock Text="保存数量" Style="{StaticResource TextBlockDefault}" Margin="0,0,5,0"/>
+                            </StackPanel>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="60" Maximum="500" Minimum="0" FontSize="13"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=HistorySaveCount}"/>
