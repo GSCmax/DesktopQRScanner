@@ -1,7 +1,6 @@
 ﻿using DesktopQRScanner.Tools;
 using DesktopQRScanner.VModel;
 using HandyControl.Data;
-using HandyControl.Themes;
 using HandyControl.Tools;
 using HinsHo.ScreenShot.CSharp;
 using System;
