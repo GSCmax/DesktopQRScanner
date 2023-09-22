@@ -111,23 +111,60 @@ namespace DesktopQRScanner.VModel
         private BitmapSource4BindingClass bitmapSource4Binding = null;
         partial void OnBitmapSource4BindingChanged(BitmapSource4BindingClass value)
         {
-            if (BitmapSource4Binding != null && BitmapSource4Binding.NeedRaise)
+            //if (BitmapSource4Binding != null && BitmapSource4Binding.NeedRaise)
+            //{
+            //    string qrtext = ZXingHelper.ReadQRCode(BitmapSource4Binding.BitmapSourceData);
+            //    if (qrtext != null)
+            //    {
+            //        SelectedLinkItem = new LinkItem()
+            //        {
+            //            Link = qrtext,
+            //            LinkDateTime = DateTime.Now,
+            //        };
+            //        GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
+            //        if (GlobalDataHelper.appConfig.AutoOpenLink)
+            //            openLink();
+            //    }
+            //    else
+            //    {
+            //        InfoMsg = "未能识别二维码";
+            //    }
+            //}
+
+            if (BitmapSource4Binding != null)
             {
-                string qrtext = ZXingHelper.ReadQRCode(BitmapSource4Binding.BitmapSourceData);
-                if (qrtext != null)
+                if (BitmapSource4Binding.NeedRaise)
                 {
-                    SelectedLinkItem = new LinkItem()
+                    string qrtext = ZXingHelper.ReadQRCode(BitmapSource4Binding.BitmapSourceData);
+                    if (qrtext != null)
                     {
-                        Link = qrtext,
-                        LinkDateTime = DateTime.Now,
-                    };
-                    GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
-                    if (GlobalDataHelper.appConfig.AutoOpenLink)
-                        openLink();
+                        SelectedLinkItem = new LinkItem()
+                        {
+                            Link = qrtext,
+                            LinkDateTime = DateTime.Now,
+                        };
+                        GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
+                        if (GlobalDataHelper.appConfig.AutoOpenLink)
+                            openLink();
+                    }
+                    else
+                    {
+                        InfoMsg = "未能识别二维码";
+                    }
                 }
                 else
                 {
-                    InfoMsg = "未能识别二维码";
+                    if (BitmapSource4Binding.BitmapSourceString != null)
+                    {
+                        SelectedLinkItem = new LinkItem()
+                        {
+                            Link = BitmapSource4Binding.BitmapSourceString,
+                            LinkDateTime = DateTime.Now,
+                        };
+                        GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
+                        if (GlobalDataHelper.appConfig.AutoOpenLink)
+                            openLink();
+                    }
                 }
             }
         }
@@ -331,5 +368,8 @@ namespace DesktopQRScanner.VModel
 
         [ObservableProperty]
         private bool needRaise;
+
+        [ObservableProperty]
+        private string bitmapSourceString;
     }
 }

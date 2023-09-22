@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.View
@@ -18,6 +20,68 @@ namespace DesktopQRScanner.View
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                HandlePaste();
+
+                e.Handled = true; //阻止默认粘贴操作
+            }
+        }
+
+        private void Paste_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            HandlePaste();
+        }
+
+        private void HandlePaste()
+        {
+            if (Clipboard.ContainsImage())
+            {
+                try
+                {
+                    var temp = Clipboard.GetImage();
+                    if (temp != null)
+                    {
+                        (DataContext as MainWindowVModel).BitmapSource4Binding = new BitmapSource4BindingClass()
+                        {
+                            NeedRaise = true,
+                            BitmapSourceData = new FormatConvertedBitmap(temp, PixelFormats.Bgr32, null, 0)
+                        };
+                    }
+                }
+                catch
+                {
+                    (DataContext as MainWindowVModel).ErrMsg = "无法粘贴此图像";
+                }
+            }
+            else if (Clipboard.ContainsText())
+            {
+                try
+                {
+                    var temp = Clipboard.GetText();
+                    if (temp != null)
+                    {
+                        (DataContext as MainWindowVModel).BitmapSource4Binding = new BitmapSource4BindingClass()
+                        {
+                            NeedRaise = false,
+                            BitmapSourceData = Tools.ZXingHelper.GenerateQRCode(temp),
+                            BitmapSourceString = temp
+                        };
+                    }
+                }
+                catch
+                {
+                    (DataContext as MainWindowVModel).ErrMsg = "无法粘贴此文本";
+                }
+            }
+            else
+            {
+                (DataContext as MainWindowVModel).ErrMsg = "无法粘贴此内容";
+            }
         }
 
         private void imageFile_DragOver(object sender, DragEventArgs e)

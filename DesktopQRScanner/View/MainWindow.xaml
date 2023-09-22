@@ -12,7 +12,23 @@
            WindowStartupLocation="CenterScreen" Topmost="True"
            ResizeMode="CanMinimize" SizeToContent="WidthAndHeight"
            UseLayoutRounding="True" BorderBrush="{DynamicResource PrimaryBrush}"
-           WindowState="{Binding MainWindowState}">
+           WindowState="{Binding MainWindowState}"
+           PreviewKeyDown="Window_PreviewKeyDown">
+
+    <hc:Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="粘贴图像或文本" Click="Paste_MenuItem_Click">
+                <MenuItem.Icon>
+                    <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"
+                          RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <ScaleTransform ScaleX="-1"/>
+                        </Path.RenderTransform>
+                    </Path>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </hc:Window.ContextMenu>
 
     <hc:Window.DataContext>
         <vm:MainWindowVModel/>
@@ -162,11 +178,12 @@
                     </Button>-->
                     <Button Width="40" Height="40" BorderThickness="0" Style="{StaticResource ButtonIcon}" FocusVisualStyle="{x:Null}"
                             Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
-                            Background="{StaticResource PrimaryBrush}" Foreground="{DynamicResource RegionBrush}"
+                            Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource RegionBrush}"
                             hc:IconElement.Geometry="{StaticResource AddGeometry}" hc:BorderElement.CornerRadius="20"
-                            AllowDrop="True" DragOver="imageFile_DragOver" Drop="imageFile_Drop">
+                            AllowDrop="True" RenderTransformOrigin="0.5,0.5"
+                            DragOver="imageFile_DragOver" Drop="imageFile_Drop">
                         <Button.RenderTransform>
-                            <RotateTransform Angle="{Binding BitmapSource4Binding, Converter={StaticResource IRC}}" CenterX="20" CenterY="20"/>
+                            <RotateTransform Angle="{Binding BitmapSource4Binding, Converter={StaticResource IRC}}"/>
                         </Button.RenderTransform>
                     </Button>
                 </Grid>
