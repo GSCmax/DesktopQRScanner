@@ -150,7 +150,7 @@
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
-                    <Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
+                    <!--<Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
                             AllowDrop="True" DragOver="imageFile_DragOver" Drop="imageFile_Drop">
                         <Button.Content>
                             <Path Height="30" Width="30" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Fill="{DynamicResource PrimaryBrush}" Data="{StaticResource DeleteFillCircleGeometry}">
@@ -159,6 +159,15 @@
                                 </Path.RenderTransform>
                             </Path>
                         </Button.Content>
+                    </Button>-->
+                    <Button Width="40" Height="40" BorderThickness="0" Style="{StaticResource ButtonIcon}" FocusVisualStyle="{x:Null}"
+                            Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
+                            Background="{StaticResource PrimaryBrush}" Foreground="{DynamicResource SecondaryRegionBrush}"
+                            hc:IconElement.Geometry="{StaticResource AddGeometry}" hc:BorderElement.CornerRadius="20"
+                            AllowDrop="True" DragOver="imageFile_DragOver" Drop="imageFile_Drop">
+                        <Button.RenderTransform>
+                            <RotateTransform Angle="{Binding BitmapSource4Binding, Converter={StaticResource IRC}}" CenterX="20" CenterY="20"/>
+                        </Button.RenderTransform>
                     </Button>
                 </Grid>
             </Border>

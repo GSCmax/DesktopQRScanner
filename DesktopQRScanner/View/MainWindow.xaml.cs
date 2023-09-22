@@ -81,9 +81,9 @@ namespace DesktopQRScanner.View
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
-                return 45;
-            else
                 return 0;
+            else
+                return 45;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
