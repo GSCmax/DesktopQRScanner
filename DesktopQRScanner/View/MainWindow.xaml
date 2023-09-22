@@ -1,18 +1,18 @@
 ﻿<hc:Window x:Class="DesktopQRScanner.View.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DesktopQRScanner.View"
-        xmlns:vm="clr-namespace:DesktopQRScanner.VModel"
-        xmlns:tools="clr-namespace:DesktopQRScanner.Tools"
-        xmlns:hc="https://handyorg.github.io/handycontrol"
-        mc:Ignorable="d" Title="二维码扫描小工具"
-        Icon="/DesktopQRScanner;component/Resources/icon.ico"
-        WindowStartupLocation="CenterScreen" Topmost="True"
-        BorderThickness="0" ResizeMode="CanMinimize"
-        SizeToContent="WidthAndHeight" UseLayoutRounding="True"
-        WindowState="{Binding MainWindowState}">
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:local="clr-namespace:DesktopQRScanner.View"
+           xmlns:vm="clr-namespace:DesktopQRScanner.VModel"
+           xmlns:tools="clr-namespace:DesktopQRScanner.Tools"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+           mc:Ignorable="d" Title="二维码扫描小工具"
+           Icon="/DesktopQRScanner;component/Resources/icon.ico"
+           WindowStartupLocation="CenterScreen" Topmost="True"
+           ResizeMode="CanMinimize" SizeToContent="WidthAndHeight"
+           UseLayoutRounding="True" BorderBrush="{DynamicResource PrimaryBrush}"
+           WindowState="{Binding MainWindowState}">
 
     <hc:Window.DataContext>
         <vm:MainWindowVModel/>
@@ -215,6 +215,7 @@
                                     <Setter Property="hc:BorderElement.CornerRadius" Value="12"/>
                                     <Setter Property="Margin" Value="0,1"/>
                                     <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
                                     <Setter Property="ToolTip">
                                         <Setter.Value>
                                             <TextBlock Width="auto" MaxWidth="300" TextWrapping="Wrap" Text="{Binding Link}"/>
@@ -283,9 +284,6 @@
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                             <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsSelected}" Value="False">
-                                            <Setter TargetName="TB" Property="TextWrapping" Value="NoWrap"/>
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
