@@ -178,7 +178,7 @@
                     </Button>-->
                     <Button Width="40" Height="40" BorderThickness="0" Style="{StaticResource ButtonIcon}" FocusVisualStyle="{x:Null}"
                             Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
-                            Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource RegionBrush}"
+                            Background="{DynamicResource PrimaryBrush}" Foreground="White"
                             hc:IconElement.Geometry="{StaticResource AddGeometry}" hc:BorderElement.CornerRadius="20"
                             AllowDrop="True" RenderTransformOrigin="0.5,0.5"
                             DragOver="imageFile_DragOver" Drop="imageFile_Drop">
@@ -203,7 +203,7 @@
             <hc:TransitioningContentControl Grid.Column="0" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Style="{StaticResource BorderClip}">
                     <Button Width="200" Height="40" FontSize="18" Content="矩形截图" BorderThickness="0"
-                        Foreground="{DynamicResource RegionBrush}" Background="{DynamicResource PrimaryBrush}"
+                        Background="{DynamicResource PrimaryBrush}" Foreground="White"
                         Command="{Binding screenShotCommand}"/>
                 </Border>
             </hc:TransitioningContentControl>
@@ -213,7 +213,7 @@
             <hc:TransitioningContentControl Grid.Column="2" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Style="{StaticResource BorderClip}">
                     <Button Width="105" Height="40" FontSize="18" Content="全屏截图" BorderThickness="0"
-                        Foreground="{DynamicResource RegionBrush}" Background="{DynamicResource PrimaryBrush}"
+                        Background="{DynamicResource PrimaryBrush}" Foreground="White"
                         Command="{Binding fullScreenShotCommand}"/>
                 </Border>
             </hc:TransitioningContentControl>
