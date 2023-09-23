@@ -78,6 +78,35 @@ namespace DesktopQRScanner.View
                     (DataContext as MainWindowVModel).ErrMsg = "无法粘贴此文本";
                 }
             }
+            else if (Clipboard.ContainsFileDropList())
+            {
+                try
+                {
+                    var temp = Clipboard.GetFileDropList();
+                    string file = temp[0];
+                    string extension = System.IO.Path.GetExtension(file).ToLower();
+                    switch (extension)
+                    {
+                        case ".jpg":
+                        case ".jpeg":
+                        case ".png":
+                        case ".bmp":
+                            (DataContext as MainWindowVModel).BitmapSource4Binding = new BitmapSource4BindingClass()
+                            {
+                                NeedRaise = true,
+                                BitmapSourceData = new BitmapImage(new Uri(file))
+                            };
+                            break;
+                        default:
+                            (DataContext as MainWindowVModel).ErrMsg = "无法粘贴此文件";
+                            break;
+                    }
+                }
+                catch
+                {
+                    (DataContext as MainWindowVModel).ErrMsg = "无法粘贴此文件";
+                }
+            }
             else
             {
                 (DataContext as MainWindowVModel).ErrMsg = "无法粘贴此内容";
