@@ -50,7 +50,7 @@ namespace DesktopQRScanner
                 Source = new Uri("pack://application:,,,/HandyControl;component/Themes/Theme.xaml")
             });
 
-            Current.MainWindow?.OnApplyTemplate();
+            //Current.MainWindow?.OnApplyTemplate();
         }
     }
 }
