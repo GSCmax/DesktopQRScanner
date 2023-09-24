@@ -257,17 +257,12 @@
                                                 </MenuItem>
                                                 <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="打开链接" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource DialogBoxLauncherGeometry}"
-                                                              RenderTransformOrigin="0.5,0.5">
-                                                            <Path.RenderTransform>
-                                                                <RotateTransform Angle="270"/>
-                                                            </Path.RenderTransform>
-                                                        </Path>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource ExtLinkGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
                                                 <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="生成二维码" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource AlignVCenterGeometry}"/>
+                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource QRGeometry}"/>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
                                                 <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="切换收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
