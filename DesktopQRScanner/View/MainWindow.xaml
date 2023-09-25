@@ -11,7 +11,7 @@
            Icon="/DesktopQRScanner;component/Resources/icon.ico"
            WindowStartupLocation="CenterScreen" Topmost="True"
            ResizeMode="CanMinimize" SizeToContent="WidthAndHeight"
-           UseLayoutRounding="True" BorderBrush="{DynamicResource PrimaryBrush}"
+           UseLayoutRounding="True" BorderThickness="0"
            WindowState="{Binding MainWindowState}"
            PreviewKeyDown="Window_PreviewKeyDown">
 
