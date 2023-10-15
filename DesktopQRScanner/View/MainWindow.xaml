@@ -15,21 +15,6 @@
            WindowState="{Binding MainWindowState}"
            PreviewKeyDown="Window_PreviewKeyDown">
 
-    <hc:Window.ContextMenu>
-        <ContextMenu>
-            <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="粘贴图像或文本" Click="Paste_MenuItem_Click">
-                <MenuItem.Icon>
-                    <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"
-                          RenderTransformOrigin="0.5,0.5">
-                        <Path.RenderTransform>
-                            <ScaleTransform ScaleX="-1"/>
-                        </Path.RenderTransform>
-                    </Path>
-                </MenuItem.Icon>
-            </MenuItem>
-        </ContextMenu>
-    </hc:Window.ContextMenu>
-
     <hc:Window.DataContext>
         <vm:MainWindowVModel/>
     </hc:Window.DataContext>
@@ -115,6 +100,21 @@
         </Grid>
     </hc:Window.NonClientAreaContent>
 
+    <hc:Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="粘贴图像或文本" Click="Paste_MenuItem_Click">
+                <MenuItem.Icon>
+                    <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"
+                          RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <ScaleTransform ScaleX="-1"/>
+                        </Path.RenderTransform>
+                    </Path>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </hc:Window.ContextMenu>
+
     <Grid Background="{DynamicResource CloudDrawingBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15"/>
@@ -131,188 +131,187 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
 
-        <!--ImageSelector-->
+        <!--#region ImageSelector-->
         <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
-            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
-        </hc:TransitioningContentControl>
-        <hc:TransitioningContentControl Grid.Column="1" Grid.Row="1" TransitionMode="Left2RightWithFade">
-            <Border CornerRadius="15" Style="{StaticResource BorderClip}">
-                <Grid>
-                    <Image Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="UniformToFill"
-                           Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"
-                           HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Image.ToolTip>
-                            <Grid Width="200" Margin="-4,0,-4,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Center" Text="右击可复制或保存图像"/>
-                                <Image Grid.Row="1" Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="Uniform"/>
-                            </Grid>
-                        </Image.ToolTip>
-                        <Image.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                    <MenuItem.Icon>
-                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="保存图像" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                    <MenuItem.Icon>
-                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource SaveGeometry}"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Image.ContextMenu>
-                    </Image>
-                    <!--<Button Width="50" Height="50" Background="Transparent" BorderThickness="0" Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
-                            AllowDrop="True" DragOver="imageFile_DragOver" Drop="imageFile_Drop">
-                        <Button.Content>
-                            <Path Height="30" Width="30" RenderTransformOrigin="0.5,0.5" Stretch="Uniform" Fill="{DynamicResource PrimaryBrush}" Data="{StaticResource DeleteFillCircleGeometry}">
-                                <Path.RenderTransform>
-                                    <RotateTransform Angle="{Binding BitmapSource4Binding, Converter={StaticResource IRC}}"/>
-                                </Path.RenderTransform>
-                            </Path>
-                        </Button.Content>
-                    </Button>-->
-                    <Button Width="40" Height="40" BorderThickness="0" Style="{StaticResource ButtonIcon}" FocusVisualStyle="{x:Null}"
-                            Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
-                            Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                            hc:IconElement.Geometry="{StaticResource AddGeometry}" hc:BorderElement.CornerRadius="20"
-                            AllowDrop="True" RenderTransformOrigin="0.5,0.5"
-                            DragOver="imageFile_DragOver" Drop="imageFile_Drop">
-                        <Button.RenderTransform>
-                            <RotateTransform Angle="{Binding BitmapSource4Binding, Converter={StaticResource IRC}}"/>
-                        </Button.RenderTransform>
-                    </Button>
-                </Grid>
-            </Border>
-        </hc:TransitioningContentControl>
-
-        <!--Button-->
-        <Grid Grid.Column="1" Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="15"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <hc:TransitioningContentControl Grid.Column="0" TransitionMode="Bottom2TopWithFade">
+            <hc:SimplePanel>
                 <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
-            </hc:TransitioningContentControl>
-            <hc:TransitioningContentControl Grid.Column="0" TransitionMode="Bottom2TopWithFade">
                 <Border CornerRadius="15" Style="{StaticResource BorderClip}">
-                    <Button Width="200" Height="40" FontSize="18" Content="矩形截图" BorderThickness="0"
-                            Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                            Command="{Binding screenShotCommand}"/>
+                    <Grid>
+                        <Image Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="UniformToFill"
+                               Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.ToolTip>
+                                <Grid Width="200" Margin="-4,0,-4,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Center" Text="右击可复制或保存图像"/>
+                                    <Image Grid.Row="1" Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="Uniform"/>
+                                </Grid>
+                            </Image.ToolTip>
+                            <Image.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                        <MenuItem.Icon>
+                                            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="保存图像" Command="{Binding PlacementTarget.Tag.saveImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                        <MenuItem.Icon>
+                                            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource SaveGeometry}"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
+                        <Button Width="30" Height="30" BorderThickness="0" Style="{StaticResource ButtonIconCircular}" FocusVisualStyle="{x:Null}"
+                                Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
+                                Background="{DynamicResource PrimaryBrush}" Foreground="White"
+                                hc:IconElement.Geometry="{StaticResource AddGeometry}"
+                                AllowDrop="True" RenderTransformOrigin="0.5,0.5"
+                                DragOver="imageFile_DragOver" Drop="imageFile_Drop" Effect="{StaticResource MyEffectShadow}">
+                            <Button.RenderTransform>
+                                <RotateTransform Angle="{Binding BitmapSource4Binding, Converter={StaticResource IRC}}"/>
+                            </Button.RenderTransform>
+                        </Button>
+                    </Grid>
                 </Border>
-            </hc:TransitioningContentControl>
-            <hc:TransitioningContentControl Grid.Column="2" TransitionMode="Bottom2TopWithFade">
-                <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
-            </hc:TransitioningContentControl>
-            <hc:TransitioningContentControl Grid.Column="2" TransitionMode="Bottom2TopWithFade">
-                <Border CornerRadius="15" Style="{StaticResource BorderClip}">
-                    <Button Width="105" Height="40" FontSize="18" Content="全屏截图" BorderThickness="0"
-                            Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                            Command="{Binding fullScreenShotCommand}"/>
-                </Border>
-            </hc:TransitioningContentControl>
-        </Grid>
-
-        <!--ListBox-->
-        <hc:TransitioningContentControl Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" TransitionMode="Bottom2TopWithFade">
-            <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
+            </hc:SimplePanel>
         </hc:TransitioningContentControl>
+        <!--#endregion-->
+
+        <!--#region Button-->
+        <hc:TransitioningContentControl Grid.Column="1" Grid.Row="3" TransitionMode="Bottom2TopWithFade">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalAlignment="Stretch" Height="30" FontSize="18" BorderThickness="0"
+                        Background="{DynamicResource PrimaryBrush}" Foreground="White"
+                        hc:BorderElement.CornerRadius="15" Effect="{StaticResource MyEffectShadow}"
+                        Command="{Binding screenShotCommand}" FocusVisualStyle="{x:Null}">
+                    <Button.Content>
+                        <TextBlock Text="矩形截图" VerticalAlignment="Center"/>
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="2" HorizontalAlignment="Stretch" Height="30" FontSize="18" BorderThickness="0"
+                        Background="{DynamicResource PrimaryBrush}" Foreground="White"
+                        hc:BorderElement.CornerRadius="15" Effect="{StaticResource MyEffectShadow}"
+                        Command="{Binding fullScreenShotCommand}" FocusVisualStyle="{x:Null}">
+                    <Button.Content>
+                        <TextBlock Text="全屏截图" VerticalAlignment="Center"/>
+                    </Button.Content>
+                </Button>
+                <Button Grid.Column="4" HorizontalAlignment="Stretch" Height="30" BorderThickness="0"
+                        Background="{DynamicResource PrimaryBrush}" Foreground="White"
+                        Effect="{StaticResource MyEffectShadow}"
+                        Style="{StaticResource ButtonIconCircular}" hc:IconElement.Geometry="{StaticResource WebCamGeometry}"
+                        Command="{Binding fullScreenShotCommand}" FocusVisualStyle="{x:Null}"/>
+            </Grid>
+        </hc:TransitioningContentControl>
+        <!--#endregion-->
+
+        <!--#region ListBox-->
         <hc:TransitioningContentControl Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" TransitionMode="Right2LeftWithFade">
-            <Border CornerRadius="15" Style="{StaticResource BorderClip}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Border Grid.Row="0">
-                        <TextBlock Margin="0,3,0,0" Style="{StaticResource TextBlockDefault}" Text="历史记录" FontSize="18"/>
-                    </Border>
-                    <Border Grid.Row="1">
-                        <ListBox BorderThickness="0" Style="{StaticResource ListBox.Small}" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" SelectedItem="{Binding SelectedLinkItem}">
-                            <ListBox.ItemContainerStyle >
-                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle.Small}">
-                                    <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                                    <Setter Property="hc:BorderElement.CornerRadius" Value="12"/>
-                                    <Setter Property="Margin" Value="0,1"/>
-                                    <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
-                                    <Setter Property="ToolTip">
-                                        <Setter.Value>
-                                            <TextBlock Width="auto" MaxWidth="300" TextWrapping="Wrap" Text="{Binding Link}"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="ContextMenu">
-                                        <Setter.Value>
-                                            <ContextMenu>
-                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制文本" Command="{Binding PlacementTarget.Tag.copyLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                                    <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="打开链接" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                                    <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource ExtLinkGeometry}"/>
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="生成二维码" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                                    <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource QRGeometry}"/>
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="切换收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                                    <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource StarGeometry}"/>
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="删除记录" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{DynamicResource DangerBrush}">
-                                                    <MenuItem.Icon>
-                                                        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource DangerBrush}" Stretch="Uniform" Data="{StaticResource DeleteFillCircleGeometry}"/>
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                            </ContextMenu>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <MultiTrigger>
-                                            <MultiTrigger.Conditions>
-                                                <Condition Property="IsSelected" Value="True"/>
-                                                <Condition Property="Selector.IsSelectionActive" Value="False"/>
-                                            </MultiTrigger.Conditions>
-                                            <MultiTrigger.Setters>
-                                                <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}"/>
-                                            </MultiTrigger.Setters>
-                                        </MultiTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="20"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Path Grid.Column="0" Height="15" Margin="-5,0,0,0" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
-                                              Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
-                                        <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
-                                    </Grid>
-                                    <DataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                            <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
-                                        </DataTrigger>
-                                    </DataTemplate.Triggers>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Border>
-                </Grid>
-            </Border>
+            <hc:SimplePanel>
+                <Border CornerRadius="15" Background="{DynamicResource RegionBrush}" Effect="{StaticResource MyEffectShadow}"/>
+                <Border CornerRadius="15" Style="{StaticResource BorderClip}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0">
+                            <TextBlock Margin="0,3,0,0" Style="{StaticResource TextBlockDefault}" Text="历史记录" FontSize="18"/>
+                        </Border>
+                        <Border Grid.Row="1">
+                            <ListBox BorderThickness="0" Style="{StaticResource ListBox.Small}" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" SelectedItem="{Binding SelectedLinkItem}">
+                                <ListBox.ItemContainerStyle >
+                                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle.Small}">
+                                        <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                                        <Setter Property="hc:BorderElement.CornerRadius" Value="12"/>
+                                        <Setter Property="Margin" Value="0,1"/>
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
+                                        <Setter Property="ToolTip">
+                                            <Setter.Value>
+                                                <TextBlock Width="auto" MaxWidth="300" TextWrapping="Wrap" Text="{Binding Link}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="ContextMenu">
+                                            <Setter.Value>
+                                                <ContextMenu>
+                                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制文本" Command="{Binding PlacementTarget.Tag.copyLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                        <MenuItem.Icon>
+                                                            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource WindowRestoreGeometry}"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="打开链接" Command="{Binding PlacementTarget.Tag.openLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                        <MenuItem.Icon>
+                                                            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource ExtLinkGeometry}"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="生成二维码" Command="{Binding PlacementTarget.Tag.genLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                        <MenuItem.Icon>
+                                                            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource QRGeometry}"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="切换收藏" Command="{Binding PlacementTarget.Tag.toggleStaredCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                                        <MenuItem.Icon>
+                                                            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource StarGeometry}"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="删除记录" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{DynamicResource DangerBrush}">
+                                                        <MenuItem.Icon>
+                                                            <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource DangerBrush}" Stretch="Uniform" Data="{StaticResource DeleteFillCircleGeometry}"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsSelected" Value="True"/>
+                                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                                </MultiTrigger.Conditions>
+                                                <MultiTrigger.Setters>
+                                                    <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}"/>
+                                                </MultiTrigger.Setters>
+                                            </MultiTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Path Grid.Column="0" Height="15" Margin="-5,0,0,0" Data="{StaticResource StarGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" Stretch="Uniform"
+                                                  Visibility="{Binding IsStared, Converter={StaticResource Boolean2VisibilityConverter}}"/>
+                                            <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
+                                        </Grid>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                    </Grid>
+                </Border>
+            </hc:SimplePanel>
         </hc:TransitioningContentControl>
+        <!--#endregion-->
+
     </Grid>
 </hc:Window>
