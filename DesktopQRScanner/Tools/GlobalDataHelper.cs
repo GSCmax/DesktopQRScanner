@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Reflection;
 using System.Windows.Media.Imaging;
 
@@ -33,9 +34,14 @@ namespace DesktopQRScanner.Tools
         public static AppConfig appConfig;
 
         /// <summary>
-        /// 存储当前App实例接受的消息
+        /// 存储当前App实例的历史记录
         /// </summary>
         public static BindingList<LinkItem> historyLinks;
+
+        /// <summary>
+        /// 存储当前App实例获取的摄像头信息
+        /// </summary>
+        public static BindingList<WebCamItem> cameraArray;
 
         /// <summary>
         /// 获取本地存储的配置信息
@@ -69,6 +75,18 @@ namespace DesktopQRScanner.Tools
                 }
             else
                 historyLinks = new BindingList<LinkItem>();
+
+            //读取摄像头列表
+            cameraArray = new BindingList<WebCamItem>();
+            using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE (PNPClass = 'Image' OR PNPClass = 'Camera')"))
+            {
+                int i = 0;
+                var devTemp = searcher.Get();
+                foreach (var device in devTemp)
+                {
+                    cameraArray.Add(new WebCamItem() { CamIndex = i++, CamName = device["Caption"].ToString() });
+                }
+            }
         }
 
 

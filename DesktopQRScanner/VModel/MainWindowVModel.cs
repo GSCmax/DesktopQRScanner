@@ -5,8 +5,12 @@ using DesktopQRScanner.Tools;
 using HandyControl.Data;
 using HinsHo.ScreenShot.CSharp;
 using Microsoft.Win32;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
 using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -111,26 +115,6 @@ namespace DesktopQRScanner.VModel
         private BitmapSource4BindingClass bitmapSource4Binding = null;
         partial void OnBitmapSource4BindingChanged(BitmapSource4BindingClass value)
         {
-            //if (BitmapSource4Binding != null && BitmapSource4Binding.NeedRaise)
-            //{
-            //    string qrtext = ZXingHelper.ReadQRCode(BitmapSource4Binding.BitmapSourceData);
-            //    if (qrtext != null)
-            //    {
-            //        SelectedLinkItem = new LinkItem()
-            //        {
-            //            Link = qrtext,
-            //            LinkDateTime = DateTime.Now,
-            //        };
-            //        GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
-            //        if (GlobalDataHelper.appConfig.AutoOpenLink)
-            //            openLink();
-            //    }
-            //    else
-            //    {
-            //        InfoMsg = "未能识别二维码";
-            //    }
-            //}
-
             if (BitmapSource4Binding != null)
             {
                 if (BitmapSource4Binding.NeedRaise)
@@ -358,6 +342,80 @@ namespace DesktopQRScanner.VModel
             }
             else
                 BitmapSource4Binding = null;
+        }
+
+        private VideoCapture capCamera = null;
+        private Thread cameraThread = null;
+        private Mat matImage = new Mat();
+
+        /// <summary>
+        /// 打开摄像头
+        /// </summary>
+        [RelayCommand]
+        private void openWebCamClick()
+        {
+            if (capCamera == null)
+            {
+                capCamera = new VideoCapture(Tools.GlobalDataHelper.appConfig.UseWebCamIndex);
+                cameraThread = new Thread(PlayCamera);
+                cameraThread.Start();
+            }
+            else
+            {
+                capCamera.Dispose();
+                capCamera = null;
+            }
+        }
+
+        private void PlayCamera()
+        {
+            short i = 0;
+            while (capCamera != null)
+            {
+                capCamera.Read(matImage);
+                if (matImage.Empty()) break;
+                i++;
+                if (i == 10)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var converted = Convert(BitmapConverter.ToBitmap(matImage));
+                        BitmapSource4Binding = new BitmapSource4BindingClass()
+                        {
+                            NeedRaise = true,
+                            BitmapSourceData = converted
+                        };
+                    });
+                    i = 0;
+                }
+                else
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var converted = Convert(BitmapConverter.ToBitmap(matImage));
+                        BitmapSource4Binding = new BitmapSource4BindingClass()
+                        {
+                            NeedRaise = false,
+                            BitmapSourceData = converted
+                        };
+                    });
+                }
+                Thread.Sleep(50);
+            }
+        }
+
+        BitmapImage Convert(Bitmap src)
+        {
+            System.Drawing.Image img = src;
+            MemoryStream ms = new MemoryStream();
+            img.Save(ms, ImageFormat.Bmp);
+            ms.Seek(0, SeekOrigin.Begin);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.StreamSource = ms;
+            image.EndInit();
+            image.Freeze();
+            return image;
         }
     }
 

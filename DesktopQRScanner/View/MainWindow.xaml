@@ -63,6 +63,7 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="2"/>
                             </Grid.RowDefinitions>
                             <TextBlock Text="使用暗色主题" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
@@ -93,6 +94,10 @@
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="5" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="60" Maximum="500" Minimum="0" FontSize="13"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=MinimizeWaitDelay}"/>
+                            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Style="{StaticResource ComboBox.Small}" Height="24" Margin="5,0,5,0"
+                                      SelectedValue="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamIndex}"
+                                      SelectedValuePath="CamIndex" DisplayMemberPath="CamName"
+                                      ItemsSource="{x:Static tools:GlobalDataHelper.cameraArray}"/>
                         </Grid>
                     </Border>
                 </hc:TransitioningContentControl>
@@ -211,7 +216,7 @@
                         Background="{DynamicResource PrimaryBrush}" Foreground="White"
                         Effect="{StaticResource MyEffectShadow}"
                         Style="{StaticResource ButtonIconCircular}" hc:IconElement.Geometry="{StaticResource WebCamGeometry}"
-                        Command="{Binding fullScreenShotCommand}" FocusVisualStyle="{x:Null}"/>
+                        Command="{Binding openWebCamClickCommand}" FocusVisualStyle="{x:Null}"/>
             </Grid>
         </hc:TransitioningContentControl>
         <!--#endregion-->
