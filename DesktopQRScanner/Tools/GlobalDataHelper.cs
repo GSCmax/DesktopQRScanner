@@ -44,6 +44,11 @@ namespace DesktopQRScanner.Tools
         public static BindingList<WebCamItem> cameraArray;
 
         /// <summary>
+        /// 指示当前App实例是否获取到摄像头
+        /// </summary>
+        public static bool ifHaveCamera = false;
+
+        /// <summary>
         /// 获取本地存储的配置信息
         /// </summary>
         public static void Init()
@@ -83,10 +88,10 @@ namespace DesktopQRScanner.Tools
                 int i = 0;
                 var devTemp = searcher.Get();
                 foreach (var device in devTemp)
-                {
                     cameraArray.Add(new WebCamItem() { CamIndex = i++, CamName = device["Caption"].ToString() });
-                }
             }
+            if (cameraArray.Count > 0)
+                ifHaveCamera = true;
         }
 
 
