@@ -27,7 +27,6 @@ namespace DesktopQRScanner.View
             if (e.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 HandlePaste();
-
                 e.Handled = true; //阻止默认粘贴操作
             }
         }
@@ -91,6 +90,7 @@ namespace DesktopQRScanner.View
                         case ".jpeg":
                         case ".png":
                         case ".bmp":
+                        case ".webp":
                             (DataContext as MainWindowVModel).BitmapSource4Binding = new BitmapSource4BindingClass()
                             {
                                 NeedRaise = true,
@@ -125,10 +125,13 @@ namespace DesktopQRScanner.View
                     case ".jpeg":
                     case ".png":
                     case ".bmp":
+                    case ".webp":
                         e.Effects = DragDropEffects.Copy;
                         e.Handled = true;
                         break;
                     default:
+                        e.Effects = DragDropEffects.None;
+                        e.Handled = true;
                         break;
                 }
             }
@@ -146,6 +149,7 @@ namespace DesktopQRScanner.View
                     case ".jpeg":
                     case ".png":
                     case ".bmp":
+                    case ".webp":
                         try
                         {
                             (DataContext as MainWindowVModel).BitmapSource4Binding = new BitmapSource4BindingClass()
