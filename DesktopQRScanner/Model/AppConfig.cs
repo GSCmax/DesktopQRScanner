@@ -42,6 +42,6 @@ namespace DesktopQRScanner.Model
         /// <summary>
         /// 使用哪个摄像头
         /// </summary>
-        public int UseWebCamIndex { get; set; } = 0;
+        public int UseWebCamIndex { get; set; } = -1;
     }
 }
