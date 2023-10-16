@@ -43,5 +43,10 @@ namespace DesktopQRScanner.Model
         /// 使用哪个摄像头
         /// </summary>
         public int UseWebCamIndex { get; set; } = -1;
+
+        /// <summary>
+        /// 等待最小化动画完成时间
+        /// </summary>
+        public int UseWebCamDelay { get; set; } = 5;
     }
 }

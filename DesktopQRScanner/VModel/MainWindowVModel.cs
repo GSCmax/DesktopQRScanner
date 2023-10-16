@@ -24,6 +24,7 @@ namespace DesktopQRScanner.VModel
         {
             errTimer.Elapsed += (s, e) => ErrMsg = null;
             infoTimer.Elapsed += (s, e) => InfoMsg = null;
+            openWebCamButtonEnabledTimer.Elapsed += (s, e) => OpenWebCamButtonEnabled = true;
 
             if (GlobalDataHelper.bs != null)
                 BitmapSource4Binding = new BitmapSource4BindingClass()
@@ -49,7 +50,7 @@ namespace DesktopQRScanner.VModel
         [ObservableProperty]
         private string errMsg = null;
         partial void OnErrMsgChanged(string value) => errTimer.Start();
-        public Timer errTimer = new Timer()
+        private Timer errTimer = new Timer()
         {
             AutoReset = false,
             Interval = 3000,
@@ -61,7 +62,7 @@ namespace DesktopQRScanner.VModel
         [ObservableProperty]
         private string infoMsg = null;
         partial void OnInfoMsgChanged(string value) => infoTimer.Start();
-        public Timer infoTimer = new Timer()
+        private Timer infoTimer = new Timer()
         {
             AutoReset = false,
             Interval = 3000,
@@ -353,35 +354,41 @@ namespace DesktopQRScanner.VModel
         [ObservableProperty]
         private bool showAddButton = true;
 
+        [ObservableProperty]
+        private bool openWebCamButtonEnabled = true;
+        private Timer openWebCamButtonEnabledTimer = new Timer()
+        {
+            AutoReset = false,
+        };
+
         /// <summary>
         /// 打开或关闭摄像头
         /// </summary>
         [RelayCommand]
         private void openWebCamClick()
         {
-            try
+            if (!vCapture.IsOpened())
             {
-                if (!vCapture.IsOpened())
+                vCapture.Open(GlobalDataHelper.appConfig.UseWebCamIndex, VideoCaptureAPIs.ANY);
+                if (vCapture.IsOpened() && !bkgWorker.IsBusy)
                 {
-                    vCapture.Open(GlobalDataHelper.appConfig.UseWebCamIndex, VideoCaptureAPIs.ANY);
-                    if (!vCapture.IsOpened())
-                        return;
                     bkgWorker.RunWorkerAsync();
                     ShowAddButton = false;
                 }
                 else
                 {
-                    bkgWorker.CancelAsync();
                     vCapture.Release();
-                    ShowAddButton = true;
+                    ErrMsg = "打开摄像头失败";
                 }
             }
-            catch
+            else
             {
                 bkgWorker.CancelAsync();
                 vCapture.Release();
                 ShowAddButton = true;
-                ErrMsg = "打开摄像头失败";
+                OpenWebCamButtonEnabled = false;
+                openWebCamButtonEnabledTimer.Interval = GlobalDataHelper.appConfig.UseWebCamDelay * 1000;
+                openWebCamButtonEnabledTimer.Start();
             }
         }
 
@@ -396,7 +403,7 @@ namespace DesktopQRScanner.VModel
                         BitmapSource4Binding = new BitmapSource4BindingClass()
                         {
                             NeedRaise = false,
-                            BitmapSourceData = frameMat.ToWriteableBitmap()
+                            BitmapSourceData = frameMat.ToBitmapSource()
                         };
                     });
                 }
