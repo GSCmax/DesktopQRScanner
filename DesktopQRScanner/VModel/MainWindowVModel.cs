@@ -6,11 +6,10 @@ using HandyControl.Data;
 using HinsHo.ScreenShot.CSharp;
 using Microsoft.Win32;
 using OpenCvSharp;
-using OpenCvSharp.Extensions;
+using OpenCvSharp.WpfExtensions;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -32,6 +31,10 @@ namespace DesktopQRScanner.VModel
                     NeedRaise = true,
                     BitmapSourceData = GlobalDataHelper.bs
                 };
+
+            vCapture = new VideoCapture();
+            bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
+            bkgWorker.DoWork += Worker_DoWork;
         }
 
         /// <summary>
@@ -344,78 +347,60 @@ namespace DesktopQRScanner.VModel
                 BitmapSource4Binding = null;
         }
 
-        private VideoCapture capCamera = null;
-        private Thread cameraThread = null;
-        private Mat matImage = new Mat();
+        private readonly VideoCapture vCapture;
+        private readonly BackgroundWorker bkgWorker;
+
+        [ObservableProperty]
+        private bool showAddButton = true;
 
         /// <summary>
-        /// 打开摄像头
+        /// 打开或关闭摄像头
         /// </summary>
         [RelayCommand]
         private void openWebCamClick()
         {
-            if (capCamera == null)
+            try
             {
-                capCamera = new VideoCapture(Tools.GlobalDataHelper.appConfig.UseWebCamIndex);
-                cameraThread = new Thread(PlayCamera);
-                cameraThread.Start();
-            }
-            else
-            {
-                capCamera.Dispose();
-                capCamera = null;
-            }
-        }
-
-        private void PlayCamera()
-        {
-            short i = 0;
-            while (capCamera != null)
-            {
-                capCamera.Read(matImage);
-                if (matImage.Empty()) break;
-                i++;
-                if (i == 10)
+                if (!vCapture.IsOpened())
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        var converted = Convert(BitmapConverter.ToBitmap(matImage));
-                        BitmapSource4Binding = new BitmapSource4BindingClass()
-                        {
-                            NeedRaise = true,
-                            BitmapSourceData = converted
-                        };
-                    });
-                    i = 0;
+                    vCapture.Open(GlobalDataHelper.appConfig.UseWebCamIndex, VideoCaptureAPIs.ANY);
+                    if (!vCapture.IsOpened())
+                        return;
+                    bkgWorker.RunWorkerAsync();
+                    ShowAddButton = false;
                 }
                 else
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        var converted = Convert(BitmapConverter.ToBitmap(matImage));
-                        BitmapSource4Binding = new BitmapSource4BindingClass()
-                        {
-                            NeedRaise = false,
-                            BitmapSourceData = converted
-                        };
-                    });
+                    bkgWorker.CancelAsync();
+                    vCapture.Release();
+                    ShowAddButton = true;
                 }
-                Thread.Sleep(50);
+            }
+            catch
+            {
+                bkgWorker.CancelAsync();
+                vCapture.Release();
+                ShowAddButton = true;
+                ErrMsg = "打开摄像头失败";
             }
         }
 
-        BitmapImage Convert(Bitmap src)
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            System.Drawing.Image img = src;
-            MemoryStream ms = new MemoryStream();
-            img.Save(ms, ImageFormat.Bmp);
-            ms.Seek(0, SeekOrigin.Begin);
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.StreamSource = ms;
-            image.EndInit();
-            image.Freeze();
-            return image;
+            while (!((BackgroundWorker)sender).CancellationPending)
+            {
+                using (var frameMat = vCapture.RetrieveMat())
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        BitmapSource4Binding = new BitmapSource4BindingClass()
+                        {
+                            NeedRaise = false,
+                            BitmapSourceData = frameMat.ToWriteableBitmap()
+                        };
+                    });
+                }
+            }
         }
     }
 

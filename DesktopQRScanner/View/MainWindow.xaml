@@ -175,7 +175,8 @@
                                 Background="{DynamicResource PrimaryBrush}" Foreground="White"
                                 hc:IconElement.Geometry="{StaticResource AddGeometry}"
                                 AllowDrop="True" RenderTransformOrigin="0.5,0.5"
-                                DragOver="imageFile_DragOver" Drop="imageFile_Drop" Effect="{StaticResource MyEffectShadow}">
+                                DragOver="imageFile_DragOver" Drop="imageFile_Drop" Effect="{StaticResource MyEffectShadow}"
+                                Visibility="{Binding ShowAddButton, Converter={StaticResource Boolean2VisibilityConverter}}">
                             <Button.RenderTransform>
                                 <RotateTransform Angle="{Binding BitmapSource4Binding, Converter={StaticResource IRC}}"/>
                             </Button.RenderTransform>
