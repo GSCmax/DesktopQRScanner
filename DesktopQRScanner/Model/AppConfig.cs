@@ -27,7 +27,7 @@ namespace DesktopQRScanner.Model
         /// <summary>
         /// 启动时自动截取全屏
         /// </summary>
-        public bool AutoFullScreenShotOnStart { get; set; } = true;
+        public bool AutoFullScreenShotOnStart { get; set; } = false;
 
         /// <summary>
         /// 历史记录数量
