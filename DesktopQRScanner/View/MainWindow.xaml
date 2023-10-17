@@ -153,7 +153,8 @@
                     <Grid>
                         <Image Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="UniformToFill"
                                Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"
-                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               ToolTipService.IsEnabled="{Binding ShowAddButton}">
                             <Image.ToolTip>
                                 <Grid Width="200" Margin="-4,0,-4,0">
                                     <Grid.RowDefinitions>
