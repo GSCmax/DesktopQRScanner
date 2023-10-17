@@ -37,16 +37,16 @@ namespace DesktopQRScanner.Model
         /// <summary>
         /// 等待最小化动画完成时间
         /// </summary>
-        public int MinimizeWaitDelay { get; set; } = 200;
+        public double MinimizeWaitDelay { get; set; } = 0.2;
+
+        /// <summary>
+        /// 调用摄像头间隔时间
+        /// </summary>
+        public int UseWebCamDelay { get; set; } = 5;
 
         /// <summary>
         /// 使用哪个摄像头
         /// </summary>
         public int UseWebCamIndex { get; set; } = -1;
-
-        /// <summary>
-        /// 等待最小化动画完成时间
-        /// </summary>
-        public int UseWebCamDelay { get; set; } = 5;
     }
 }

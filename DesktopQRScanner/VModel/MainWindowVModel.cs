@@ -214,7 +214,7 @@ namespace DesktopQRScanner.VModel
         private void screenShot()
         {
             MainWindowState = WindowState.Minimized;
-            Thread.Sleep(GlobalDataHelper.appConfig.MinimizeWaitDelay);
+            Thread.Sleep((int)(GlobalDataHelper.appConfig.MinimizeWaitDelay * 1000));
             ScreenshotOptions screenshotOptions = new ScreenshotOptions()
             {
                 BackgroundOpacity = 0.5,
@@ -237,7 +237,7 @@ namespace DesktopQRScanner.VModel
         private void fullScreenShot()
         {
             MainWindowState = WindowState.Minimized;
-            Thread.Sleep(GlobalDataHelper.appConfig.MinimizeWaitDelay);
+            Thread.Sleep((int)(GlobalDataHelper.appConfig.MinimizeWaitDelay * 1000));
             BitmapSource4Binding = new BitmapSource4BindingClass()
             {
                 NeedRaise = true,

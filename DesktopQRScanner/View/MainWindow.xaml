@@ -48,12 +48,12 @@
             <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
-            <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-148" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
+            <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-155" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
                 <hc:TransitioningContentControl Grid.Column="0" Grid.Row="1" TransitionMode="Top2Bottom">
                     <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="0,0,10,10" Margin="10,0,10,10" Effect="{StaticResource EffectShadow2}">
-                        <Grid>
+                        <Grid Width="190">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -89,18 +89,18 @@
                                 <Hyperlink Command="{Binding openHistoryFileCommand}">历史记录</Hyperlink><Run>保存数量</Run>
                             </TextBlock>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
-                                              Width="60" Maximum="500" Minimum="0" FontSize="13"
+                                              Width="60" Maximum="500" Minimum="0" FontSize="13" Increment="10"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=HistorySaveCount}"/>
                             <TextBlock Text="最小化动画等待时间" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
-                                       ToolTip="单位：毫秒"/>
+                                       ToolTip="单位：秒"/>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="5" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
-                                              Width="60" Maximum="500" Minimum="0" FontSize="13"
+                                              Width="60" Maximum="1" Minimum="0" FontSize="13" Increment="0.1" DecimalPlaces="1"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=MinimizeWaitDelay}"/>
                             <TextBlock Text="启动摄像头间隔时间" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="6" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="单位：秒"
                                        Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="6" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,3,5,3"
-                                              Width="60" Maximum="10" Minimum="0" FontSize="13"
+                                              Width="60" Maximum="10" Minimum="1" FontSize="13"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamDelay}"
                                               Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
                             <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Style="{StaticResource ComboBox.Small}" Height="24" Margin="5,3,5,3"
