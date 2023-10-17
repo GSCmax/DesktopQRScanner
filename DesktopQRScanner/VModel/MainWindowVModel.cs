@@ -134,10 +134,11 @@ namespace DesktopQRScanner.VModel
                         GlobalDataHelper.historyLinks.Insert(0, SelectedLinkItem);
                         if (GlobalDataHelper.appConfig.AutoOpenLink)
                             openLink();
-                    }
-                    else
-                    {
-                        InfoMsg = "未能识别二维码";
+
+                        //结束拍摄
+                        openWebCamClickCommand.Execute(null);
+
+                        InfoMsg = "成功识别二维码";
                     }
                 }
                 else
@@ -282,7 +283,7 @@ namespace DesktopQRScanner.VModel
             }
             catch
             {
-                InfoMsg = "无法打开此链接";
+                ErrMsg = "无法打开此链接";
             }
         }
 
@@ -328,7 +329,7 @@ namespace DesktopQRScanner.VModel
             if (BitmapSource4Binding == null)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "图像文件 (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp";
+                openFileDialog.Filter = "图像文件 (*.jpg, *.jpeg, *.png, *.bmp, *webp)|*.jpg;*.jpeg;*.png;*.bmp;*.webp";
 
                 if (openFileDialog.ShowDialog() == true)
                     try
@@ -394,18 +395,35 @@ namespace DesktopQRScanner.VModel
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            int i = 0;
             while (!((BackgroundWorker)sender).CancellationPending)
             {
                 using (var frameMat = vCapture.RetrieveMat())
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    if (i == 15)
                     {
-                        BitmapSource4Binding = new BitmapSource4BindingClass()
+                        Application.Current.Dispatcher.Invoke(() =>
                         {
-                            NeedRaise = false,
-                            BitmapSourceData = frameMat.ToBitmapSource()
-                        };
-                    });
+                            BitmapSource4Binding = new BitmapSource4BindingClass()
+                            {
+                                NeedRaise = true,
+                                BitmapSourceData = frameMat.ToBitmapSource()
+                            };
+                        });
+                        i = 0;
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            BitmapSource4Binding = new BitmapSource4BindingClass()
+                            {
+                                NeedRaise = false,
+                                BitmapSourceData = frameMat.ToBitmapSource()
+                            };
+                        });
+                        i++;
+                    }
                 }
             }
         }

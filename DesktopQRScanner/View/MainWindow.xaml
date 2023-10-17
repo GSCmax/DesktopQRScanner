@@ -36,7 +36,7 @@
             <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="{DynamicResource SecondaryRegionBrush}" ToolTip="软件版本与消息提示" hc:WindowAttach.IsDragElement="True">
                 <TextBlock FontWeight="Bold" Text="{x:Static tools:GlobalDataHelper.Version}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
-            <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="{DynamicResource PrimaryBrush}" Visibility="{Binding InfoMsg, Converter={StaticResource S2VC}}" IsHitTestVisible="False">
+            <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="{DynamicResource SuccessBrush}" Visibility="{Binding InfoMsg, Converter={StaticResource S2VC}}" IsHitTestVisible="False">
                 <TextBlock FontWeight="Bold" Text="{Binding InfoMsg}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
             </Border>
             <Border Grid.Column="1" Height="19" Width="100" CornerRadius="5" Margin="0,0,5,0" Background="{DynamicResource DangerBrush}" Visibility="{Binding ErrMsg, Converter={StaticResource S2VC}}" IsHitTestVisible="False">
@@ -96,14 +96,14 @@
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="5" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="60" Maximum="1" Minimum="0" FontSize="13" Increment="0.1" DecimalPlaces="1"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=MinimizeWaitDelay}"/>
-                            <TextBlock Text="启动摄像头间隔时间" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="6" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
+                            <TextBlock Text="调用摄像头间隔时间" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="6" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="单位：秒"
                                        Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="6" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,3,5,3"
                                               Width="60" Maximum="10" Minimum="1" FontSize="13"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamDelay}"
                                               Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
-                            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Style="{StaticResource ComboBox.Small}" Height="24" Margin="5,3,5,3"
+                            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Style="{StaticResource ComboBox.Small}" Height="24" Margin="5,3,5,3" ToolTip="调用摄像头名称"
                                       SelectedValue="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamIndex}"
                                       SelectedValuePath="CamIndex" DisplayMemberPath="CamName" ItemsSource="{x:Static tools:GlobalDataHelper.cameraArray}"
                                       Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
