@@ -97,6 +97,7 @@ namespace DesktopQRScanner.Tools
 
             #region 使用opencv查找
             int deviceIndex = 0; // 从0开始，依次尝试打开摄像头设备
+            string deviceName = null;
             VideoCapture capture = new VideoCapture();
             while (true)
             {
@@ -104,7 +105,7 @@ namespace DesktopQRScanner.Tools
                 if (capture.IsOpened())
                 {
                     // 打开成功，显示摄像头信息
-                    string deviceName = capture.GetBackendName();
+                    deviceName = deviceIndex + "_" + capture.GetBackendName();
                     capture.Release();
                     cameraArray.Add(new WebCamItem() { CamIndex = deviceIndex, CamName = deviceName });
                     deviceIndex++;
