@@ -211,7 +211,7 @@ namespace DesktopQRScanner.VModel
         /// <summary>
         /// 截图
         /// </summary>
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(ShowAddButton))]
         private void screenShot()
         {
             MainWindowState = WindowState.Minimized;
@@ -234,7 +234,7 @@ namespace DesktopQRScanner.VModel
         /// <summary>
         /// 全局截图
         /// </summary>
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(ShowAddButton))]
         private void fullScreenShot()
         {
             MainWindowState = WindowState.Minimized;
@@ -353,6 +353,8 @@ namespace DesktopQRScanner.VModel
         private readonly BackgroundWorker bkgWorker;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(screenShotCommand))]
+        [NotifyCanExecuteChangedFor(nameof(fullScreenShotCommand))]
         private bool showAddButton = true;
 
         [ObservableProperty]
