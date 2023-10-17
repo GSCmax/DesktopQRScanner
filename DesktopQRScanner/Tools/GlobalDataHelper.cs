@@ -1,5 +1,6 @@
 ﻿using DesktopQRScanner.Model;
 using Newtonsoft.Json;
+using OpenCvSharp;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -83,13 +84,39 @@ namespace DesktopQRScanner.Tools
 
             //读取摄像头列表
             cameraArray = new BindingList<WebCamItem>();
-            using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE (PNPClass = 'Image' OR PNPClass = 'Camera')"))
+
+            #region 使用设备管理器查找
+            //using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE (PNPClass = 'Image' OR PNPClass = 'Camera')"))
+            //{
+            //    int i = 0;
+            //    var devTemp = searcher.Get();
+            //    foreach (var device in devTemp)
+            //        cameraArray.Add(new WebCamItem() { CamIndex = i++, CamName = device["Caption"].ToString() });
+            //}
+            #endregion
+
+            #region 使用opencv查找
+            int deviceIndex = 0; // 从0开始，依次尝试打开摄像头设备
+            VideoCapture capture = new VideoCapture();
+            while (true)
             {
-                int i = 0;
-                var devTemp = searcher.Get();
-                foreach (var device in devTemp)
-                    cameraArray.Add(new WebCamItem() { CamIndex = i++, CamName = device["Caption"].ToString() });
+                capture.Open(deviceIndex);
+                if (capture.IsOpened())
+                {
+                    // 打开成功，显示摄像头信息
+                    string deviceName = capture.GetBackendName();
+                    capture.Release();
+                    cameraArray.Add(new WebCamItem() { CamIndex = deviceIndex, CamName = deviceName });
+                    deviceIndex++;
+                }
+                else
+                {
+                    // 打开失败，设备索引超出范围
+                    break;
+                }
             }
+            #endregion
+
             if (cameraArray.Count > 0)
                 ifHaveCamera = true;
         }
