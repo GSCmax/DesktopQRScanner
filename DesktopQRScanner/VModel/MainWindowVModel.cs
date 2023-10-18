@@ -136,7 +136,8 @@ namespace DesktopQRScanner.VModel
                             openLink();
 
                         //结束拍摄
-                        openWebCamClickCommand.Execute(null);
+                        if (vCapture.IsOpened())
+                            openWebCamClickCommand.Execute(null);
 
                         InfoMsg = "成功识别二维码";
                     }
@@ -182,7 +183,7 @@ namespace DesktopQRScanner.VModel
             }
             catch
             {
-                throw new Exception("系统剪切板异常");
+                ErrMsg = "系统剪切板异常";
             }
         }
 
@@ -267,7 +268,7 @@ namespace DesktopQRScanner.VModel
             }
             catch
             {
-                throw new Exception("系统剪切板异常");
+                ErrMsg = "系统剪切板异常";
             }
         }
 
@@ -346,7 +347,9 @@ namespace DesktopQRScanner.VModel
                     }
             }
             else
+            {
                 BitmapSource4Binding = null;
+            }
         }
 
         private readonly VideoCapture vCapture;
