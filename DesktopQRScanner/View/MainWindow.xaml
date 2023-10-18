@@ -204,7 +204,6 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="15"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" HorizontalAlignment="Stretch" Height="30" FontSize="18" BorderThickness="0"
                         Background="{DynamicResource PrimaryBrush}" Foreground="White"
@@ -214,20 +213,26 @@
                         <TextBlock Text="矩形截图" VerticalAlignment="Center"/>
                     </Button.Content>
                 </Button>
-                <Button Grid.Column="2" HorizontalAlignment="Stretch" Height="30" FontSize="18" BorderThickness="0"
-                        Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                        hc:BorderElement.CornerRadius="5,15,15,5" Effect="{StaticResource MyEffectShadow}"
-                        Command="{Binding fullScreenShotCommand}" FocusVisualStyle="{x:Null}">
-                    <Button.Content>
-                        <TextBlock Text="全屏截图" VerticalAlignment="Center"/>
-                    </Button.Content>
-                </Button>
-                <Button Grid.Column="4" Width="30" Height="30" BorderThickness="0" Margin="15,0,0,0"
-                        Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                        Effect="{StaticResource MyEffectShadow}" IsEnabled="{Binding OpenWebCamButtonEnabled}"
-                        Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"
-                        Style="{StaticResource ButtonIconCircular}" hc:IconElement.Geometry="{StaticResource WebCamGeometry}"
-                        Command="{Binding openWebCamClickCommand}" FocusVisualStyle="{x:Null}"/>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" HorizontalAlignment="Stretch" Height="30" FontSize="18" BorderThickness="0"
+                            Background="{DynamicResource PrimaryBrush}" Foreground="White"
+                            hc:BorderElement.CornerRadius="5,15,15,5" Effect="{StaticResource MyEffectShadow}"
+                            Command="{Binding fullScreenShotCommand}" FocusVisualStyle="{x:Null}">
+                        <Button.Content>
+                            <TextBlock Text="全屏截图" VerticalAlignment="Center"/>
+                        </Button.Content>
+                    </Button>
+                    <Button Grid.Column="1" Width="30" Height="30" BorderThickness="0" Margin="15,0,0,0"
+                            Background="{DynamicResource PrimaryBrush}" Foreground="White"
+                            Effect="{StaticResource MyEffectShadow}" IsEnabled="{Binding OpenWebCamButtonEnabled}"
+                            Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"
+                            Style="{StaticResource ButtonIconCircular}" hc:IconElement.Geometry="{StaticResource WebCamGeometry}"
+                            Command="{Binding openWebCamClickCommand}" FocusVisualStyle="{x:Null}"/>
+                </Grid>
             </Grid>
         </hc:TransitioningContentControl>
         <!--#endregion-->
