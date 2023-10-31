@@ -82,7 +82,7 @@ namespace DesktopQRScanner.Tools
                 historyLinks = new BindingList<LinkItem>();
 
             //读取摄像头列表
-            cameraArray = new BindingList<WebCamItem>();
+            cameraArray = new BindingList<WebCamItem>() { new WebCamItem() { CamIndex = -1, CamName = string.Empty } };
 
             #region 使用设备管理器查找
             //using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE (PNPClass = 'Image' OR PNPClass = 'Camera')"))

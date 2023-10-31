@@ -49,7 +49,7 @@ namespace DesktopQRScanner.VModel
         /// </summary>
         [ObservableProperty]
         private string errMsg = null;
-        partial void OnErrMsgChanged(string value) => errTimer.Start();
+        partial void OnErrMsgChanged(string value) { if (value != null) errTimer.Start(); }
         private Timer errTimer = new Timer()
         {
             AutoReset = false,
@@ -61,7 +61,7 @@ namespace DesktopQRScanner.VModel
         /// </summary>
         [ObservableProperty]
         private string infoMsg = null;
-        partial void OnInfoMsgChanged(string value) => infoTimer.Start();
+        partial void OnInfoMsgChanged(string value) { if (value != null) infoTimer.Start(); }
         private Timer infoTimer = new Timer()
         {
             AutoReset = false,
@@ -375,16 +375,23 @@ namespace DesktopQRScanner.VModel
         {
             if (!vCapture.IsOpened())
             {
-                vCapture.Open(GlobalDataHelper.appConfig.UseWebCamIndex, VideoCaptureAPIs.ANY);
-                if (vCapture.IsOpened() && !bkgWorker.IsBusy)
+                if (GlobalDataHelper.appConfig.UseWebCamIndex != -1)
                 {
-                    bkgWorker.RunWorkerAsync();
-                    ShowAddButton = false;
+                    vCapture.Open(GlobalDataHelper.appConfig.UseWebCamIndex, VideoCaptureAPIs.ANY);
+                    if (vCapture.IsOpened() && !bkgWorker.IsBusy)
+                    {
+                        bkgWorker.RunWorkerAsync();
+                        ShowAddButton = false;
+                    }
+                    else
+                    {
+                        vCapture.Release();
+                        ErrMsg = "打开摄像头失败";
+                    }
                 }
                 else
                 {
-                    vCapture.Release();
-                    ErrMsg = "打开摄像头失败";
+                    ErrMsg = "请先选择摄像头";
                 }
             }
             else
