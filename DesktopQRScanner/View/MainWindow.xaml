@@ -154,8 +154,9 @@
                         <Image Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="UniformToFill"
                                Tag="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"
                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                               ToolTip="右击可复制或保存图像"
                                ToolTipService.IsEnabled="{Binding ShowAddButton}">
-                            <Image.ToolTip>
+                            <!--<Image.ToolTip>
                                 <Grid Width="200" Margin="-4,0,-4,0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -164,7 +165,7 @@
                                     <TextBlock Grid.Row="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Center" Text="右击可复制或保存图像"/>
                                     <Image Grid.Row="1" Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="Uniform"/>
                                 </Grid>
-                            </Image.ToolTip>
+                            </Image.ToolTip>-->
                             <Image.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
