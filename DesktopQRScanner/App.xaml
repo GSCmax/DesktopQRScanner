@@ -26,7 +26,7 @@
                     <ImageDrawing o:Freeze="True" ImageSource="/DesktopQRScanner;component/Resources/cloud.png" Rect="0,0,157,157"/>
                 </DrawingBrush.Drawing>
             </DrawingBrush>
-            <DropShadowEffect x:Key="MyEffectShadow" o:Freeze="True" BlurRadius="15" ShadowDepth="0" Direction="0" Color="{StaticResource PrimaryColor}" Opacity=".2" RenderingBias="Performance" />
+            <DropShadowEffect x:Key="MyEffectShadow" o:Freeze="True" BlurRadius="15" ShadowDepth="0" Direction="0" Color="{StaticResource EffectShadowColor}" Opacity=".2" RenderingBias="Performance" />
             <!--#endregion-->
             <!--#region Styles-->
             <Style o:Freeze="True" x:Key="MyMenuItemBaseStyle" TargetType="MenuItem" BasedOn="{StaticResource MenuItemBaseStyle}">

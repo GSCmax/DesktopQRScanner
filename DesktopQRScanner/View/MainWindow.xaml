@@ -11,9 +11,22 @@
            Icon="/DesktopQRScanner;component/Resources/icon.ico"
            WindowStartupLocation="CenterScreen" Topmost="True"
            ResizeMode="CanMinimize" SizeToContent="WidthAndHeight"
-           UseLayoutRounding="True" BorderThickness="0"
+           UseLayoutRounding="True" BorderThickness="1"
            WindowState="{Binding MainWindowState}"
            PreviewKeyDown="Window_PreviewKeyDown">
+
+    <hc:Window.Style>
+        <Style TargetType="hc:Window" BasedOn="{StaticResource WindowWin10}">
+            <Style.Triggers>
+                <Trigger Property="IsActive" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                </Trigger>
+                <Trigger Property="IsActive" Value="False">
+                    <Setter Property="BorderBrush" Value="{DynamicResource RegionBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </hc:Window.Style>
 
     <hc:Window.DataContext>
         <vm:MainWindowVModel/>
@@ -48,10 +61,10 @@
             <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
-            <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-155" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False">
+            <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-165" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False" Opened="Popup_Opened" Closed="Popup_Closed">
                 <hc:TransitioningContentControl Grid.Column="0" Grid.Row="1" TransitionMode="Top2Bottom">
                     <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="0,0,10,10" Margin="10,0,10,10" Effect="{StaticResource EffectShadow2}">
-                        <Grid Width="190">
+                        <Grid Width="200">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
@@ -67,10 +80,21 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="2"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="使用暗色主题" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
-                            <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
-                                          IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"
-                                          Command="{Binding skinToggleCommand}" CommandParameter="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"/>
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="主题色" HorizontalAlignment="Left" Grid.Column="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
+                                <TextBox Grid.Column="1" Style="{StaticResource TextBox.Small}" Height="24" TextChanged="TextBox_TextChanged" Margin="0,0,5,0"
+                                         Name="primaryColorTB" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PrimaryColor}"/>
+                                <TextBlock Text="暗色" HorizontalAlignment="Left" Grid.Column="2" Style="{StaticResource TextBlockDefault}" Margin="0,0,5,0"/>
+                                <ToggleButton HorizontalAlignment="Right" Grid.Column="3" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
+                                              IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"
+                                              Command="{Binding skinToggleCommand}" CommandParameter="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"/>
+                            </Grid>
                             <TextBlock Text="启动时执行全局截图" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="若启用，软件启动时将执行一次全局截图"/>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
@@ -81,12 +105,12 @@
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoOpenLink}"/>
                             <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="若启用，软件关闭时将标记为“收藏”的历史排序至历史记录最前端">
-                                <Hyperlink Command="{Binding openHistoryFileCommand}">历史记录</Hyperlink><Run>自动整理</Run>
+                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryBrush}">历史记录</Hyperlink><Run>自动整理</Run>
                             </TextBlock>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="3" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoArrange}"/>
                             <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0">
-                                <Hyperlink Command="{Binding openHistoryFileCommand}">历史记录</Hyperlink><Run>保存数量</Run>
+                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryBrush}">历史记录</Hyperlink><Run>保存数量</Run>
                             </TextBlock>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="60" Maximum="500" Minimum="0" FontSize="13" Increment="10"

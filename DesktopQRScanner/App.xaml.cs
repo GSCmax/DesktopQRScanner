@@ -5,6 +5,7 @@ using HandyControl.Tools;
 using HinsHo.ScreenShot.CSharp;
 using System;
 using System.Windows;
+using System.Windows.Media;
 
 namespace DesktopQRScanner
 {
@@ -26,6 +27,8 @@ namespace DesktopQRScanner
             };
 
             GlobalDataHelper.Init();
+
+            Resources.Add("PrimaryBrush", new SolidColorBrush((Color)ColorConverter.ConvertFromString(GlobalDataHelper.appConfig.PrimaryColor)));
 
             if (GlobalDataHelper.appConfig.UseDarkTheme)
                 UpdateSkin(SkinType.Dark);

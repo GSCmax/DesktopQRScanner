@@ -168,6 +168,29 @@ namespace DesktopQRScanner.View
                 }
             }
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(primaryColorTB.Text));
+            }
+            catch
+            {
+                (DataContext as MainWindowVModel).ErrMsg = "主题色颜色无效";
+            }
+        }
+
+        private void Popup_Opened(object sender, EventArgs e)
+        {
+            PreviewKeyDown -= Window_PreviewKeyDown;
+        }
+
+        private void Popup_Closed(object sender, EventArgs e)
+        {
+            PreviewKeyDown += Window_PreviewKeyDown;
+            primaryColorTB.Text = (Application.Current.Resources["PrimaryBrush"] as SolidColorBrush).Color.ToString();
+        }
     }
 
     /// <summary>

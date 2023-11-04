@@ -10,6 +10,11 @@ namespace DesktopQRScanner.Model
         public static readonly string SavePath = $"{AppDomain.CurrentDomain.BaseDirectory}Config.json";
 
         /// <summary>
+        /// 主题色
+        /// </summary>
+        public string PrimaryColor { get; set; } = "#7160e8";
+
+        /// <summary>
         /// 使用暗色主题
         /// </summary>
         public bool UseDarkTheme { get; set; } = false;
