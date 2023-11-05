@@ -440,16 +440,4 @@ namespace DesktopQRScanner.VModel
             }
         }
     }
-
-    internal partial class BitmapSource4BindingClass : ObservableObject
-    {
-        [ObservableProperty]
-        private BitmapSource bitmapSourceData;
-
-        [ObservableProperty]
-        private bool needRaise;
-
-        [ObservableProperty]
-        private string bitmapSourceString;
-    }
 }
