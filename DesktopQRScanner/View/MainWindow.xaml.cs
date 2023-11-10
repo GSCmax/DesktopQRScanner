@@ -174,6 +174,7 @@ namespace DesktopQRScanner.View
             try
             {
                 Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(primaryColorTB.Text));
+                (DataContext as MainWindowVModel).ErrMsg = null;
             }
             catch
             {

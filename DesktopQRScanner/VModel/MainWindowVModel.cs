@@ -49,7 +49,7 @@ namespace DesktopQRScanner.VModel
         /// </summary>
         [ObservableProperty]
         private string errMsg = null;
-        partial void OnErrMsgChanged(string value) { if (value != null) errTimer.Start(); }
+        partial void OnErrMsgChanged(string value) { if (value != null) { errTimer.Start(); } else { errTimer.Stop(); } }
         private Timer errTimer = new Timer()
         {
             AutoReset = false,

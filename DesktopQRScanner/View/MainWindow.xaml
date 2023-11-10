@@ -89,7 +89,8 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="主题色" HorizontalAlignment="Left" Grid.Column="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
                                 <TextBox Grid.Column="1" Style="{StaticResource TextBox.Small}" Height="24" TextChanged="TextBox_TextChanged" Margin="0,0,5,0"
-                                         Name="primaryColorTB" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PrimaryColor}"/>
+                                         Name="primaryColorTB" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PrimaryColor}"
+                                         InputMethod.IsInputMethodEnabled="False"/>
                                 <TextBlock Text="暗色" HorizontalAlignment="Left" Grid.Column="2" Style="{StaticResource TextBlockDefault}" Margin="0,0,5,0"/>
                                 <ToggleButton HorizontalAlignment="Right" Grid.Column="3" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                               IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseDarkTheme}"
