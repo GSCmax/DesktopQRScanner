@@ -2,13 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopQRScanner.Model;
 using DesktopQRScanner.Tools;
+using GitHub.secile.UsbCamera;
 using HandyControl.Data;
 using HinsHo.ScreenShot.CSharp;
 using Microsoft.Win32;
-using OpenCvSharp;
-using OpenCvSharp.WpfExtensions;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -24,18 +22,15 @@ namespace DesktopQRScanner.VModel
         {
             errTimer.Elapsed += (s, e) => ErrMsg = null;
             infoTimer.Elapsed += (s, e) => InfoMsg = null;
-            openWebCamButtonEnabledTimer.Elapsed += (s, e) => OpenWebCamButtonEnabled = true;
 
             if (GlobalDataHelper.bs != null)
+            {
                 BitmapSource4Binding = new BitmapSource4BindingClass()
                 {
                     NeedRaise = true,
                     BitmapSourceData = GlobalDataHelper.bs
                 };
-
-            vCapture = new VideoCapture();
-            bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
-            bkgWorker.DoWork += Worker_DoWork;
+            }
         }
 
         /// <summary>
@@ -53,7 +48,7 @@ namespace DesktopQRScanner.VModel
         private Timer errTimer = new Timer()
         {
             AutoReset = false,
-            Interval = 3000,
+            Interval = 5000,
         };
 
         /// <summary>
@@ -65,7 +60,7 @@ namespace DesktopQRScanner.VModel
         private Timer infoTimer = new Timer()
         {
             AutoReset = false,
-            Interval = 3000,
+            Interval = 5000,
         };
 
         /// <summary>
@@ -136,8 +131,8 @@ namespace DesktopQRScanner.VModel
                             openLink();
 
                         //结束拍摄
-                        if (vCapture.IsOpened())
-                            openWebCamClickCommand.Execute(null);
+                        if (ifCameraStarted)
+                            StopCamera();
 
                         InfoMsg = "成功识别二维码";
                     }
@@ -352,20 +347,13 @@ namespace DesktopQRScanner.VModel
             }
         }
 
-        private readonly VideoCapture vCapture;
-        private readonly BackgroundWorker bkgWorker;
-
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(screenShotCommand))]
         [NotifyCanExecuteChangedFor(nameof(fullScreenShotCommand))]
         private bool showAddButton = true;
 
-        [ObservableProperty]
-        private bool openWebCamButtonEnabled = true;
-        private Timer openWebCamButtonEnabledTimer = new Timer()
-        {
-            AutoReset = false,
-        };
+        private UsbCamera camera;
+        private bool ifCameraStarted = false;
 
         /// <summary>
         /// 打开或关闭摄像头
@@ -373,21 +361,27 @@ namespace DesktopQRScanner.VModel
         [RelayCommand]
         private void openWebCamClick()
         {
-            if (!vCapture.IsOpened())
+            if (!ifCameraStarted)
             {
                 if (GlobalDataHelper.appConfig.UseWebCamIndex != -1)
                 {
-                    vCapture.Open(GlobalDataHelper.appConfig.UseWebCamIndex, VideoCaptureAPIs.ANY);
-                    if (vCapture.IsOpened() && !bkgWorker.IsBusy)
+                    var formats = UsbCamera.GetVideoFormat(GlobalDataHelper.appConfig.UseWebCamIndex);
+                    var format = formats[0];
+                    camera = new UsbCamera(GlobalDataHelper.appConfig.UseWebCamIndex, format);
+                    camera.PreviewCaptured += (bmp) =>
                     {
-                        bkgWorker.RunWorkerAsync();
-                        ShowAddButton = false;
-                    }
-                    else
-                    {
-                        vCapture.Release();
-                        ErrMsg = "打开摄像头失败";
-                    }
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            BitmapSource4Binding = new BitmapSource4BindingClass()
+                            {
+                                NeedRaise = true,
+                                BitmapSourceData = bmp
+                            };
+                        });
+                    };
+                    camera.Start();
+                    ShowAddButton = false;
+                    ifCameraStarted = true;
                 }
                 else
                 {
@@ -396,48 +390,15 @@ namespace DesktopQRScanner.VModel
             }
             else
             {
-                bkgWorker.CancelAsync();
-                vCapture.Release();
-                ShowAddButton = true;
-                OpenWebCamButtonEnabled = false;
-                openWebCamButtonEnabledTimer.Interval = GlobalDataHelper.appConfig.UseWebCamDelay * 1000;
-                openWebCamButtonEnabledTimer.Start();
+                StopCamera();
             }
         }
 
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        private void StopCamera()
         {
-            int i = 0;
-            while (!((BackgroundWorker)sender).CancellationPending)
-            {
-                using (var frameMat = vCapture.RetrieveMat())
-                {
-                    if (i == 15)
-                    {
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            BitmapSource4Binding = new BitmapSource4BindingClass()
-                            {
-                                NeedRaise = true,
-                                BitmapSourceData = frameMat.ToBitmapSource()
-                            };
-                        });
-                        i = 0;
-                    }
-                    else
-                    {
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            BitmapSource4Binding = new BitmapSource4BindingClass()
-                            {
-                                NeedRaise = false,
-                                BitmapSourceData = frameMat.ToBitmapSource()
-                            };
-                        });
-                        i++;
-                    }
-                }
-            }
+            camera.Release();
+            ShowAddButton = true;
+            ifCameraStarted = false;
         }
     }
 }

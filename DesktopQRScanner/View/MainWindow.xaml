@@ -77,7 +77,6 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
                                 <RowDefinition Height="2"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
@@ -121,14 +120,7 @@
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="5" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="60" Maximum="1" Minimum="0" FontSize="13" Increment="0.1" DecimalPlaces="1"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=MinimizeWaitDelay}"/>
-                            <TextBlock Text="调用摄像头间隔时间" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="6" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
-                                       ToolTip="单位：秒"
-                                       Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
-                            <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="6" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,3,5,3"
-                                              Width="60" Maximum="10" Minimum="1" FontSize="13"
-                                              Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamDelay}"
-                                              Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
-                            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Style="{StaticResource ComboBox.Small}" Height="24" Margin="5,3,5,3" ToolTip="调用摄像头名称"
+                            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Style="{StaticResource ComboBox.Small}" Height="24" Margin="5,3,5,3" ToolTip="调用摄像头名称"
                                       SelectedValue="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamIndex}"
                                       SelectedValuePath="CamIndex" DisplayMemberPath="CamName" ItemsSource="{x:Static tools:GlobalDataHelper.cameraArray}"
                                       Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
@@ -254,7 +246,7 @@
                     </Button>
                     <Button Grid.Column="1" Width="30" Height="30" BorderThickness="0" Margin="15,0,0,0"
                             Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                            Effect="{StaticResource MyEffectShadow}" IsEnabled="{Binding OpenWebCamButtonEnabled}"
+                            Effect="{StaticResource MyEffectShadow}"
                             Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"
                             Style="{StaticResource ButtonIconCircular}" hc:IconElement.Geometry="{StaticResource WebCamGeometry}"
                             Command="{Binding openWebCamClickCommand}" FocusVisualStyle="{x:Null}"/>
@@ -313,7 +305,7 @@
                                                             <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource PrimaryBrush}" Stretch="Uniform" Data="{StaticResource StarGeometry}"/>
                                                         </MenuItem.Icon>
                                                     </MenuItem>
-                                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="删除记录" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Foreground="{DynamicResource DangerBrush}">
+                                                    <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="删除记录" Command="{Binding PlacementTarget.Tag.removeLinkCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                         <MenuItem.Icon>
                                                             <Path VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource DangerBrush}" Stretch="Uniform" Data="{StaticResource DeleteFillCircleGeometry}"/>
                                                         </MenuItem.Icon>
