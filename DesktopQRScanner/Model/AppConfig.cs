@@ -45,11 +45,6 @@ namespace DesktopQRScanner.Model
         public double MinimizeWaitDelay { get; set; } = 0.2;
 
         /// <summary>
-        /// 调用摄像头间隔时间
-        /// </summary>
-        public int UseWebCamDelay { get; set; } = 5;
-
-        /// <summary>
         /// 使用哪个摄像头
         /// </summary>
         public int UseWebCamIndex { get; set; } = -1;
