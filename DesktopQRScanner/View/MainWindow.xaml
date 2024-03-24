@@ -86,7 +86,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="主题色" HorizontalAlignment="Left" Grid.Column="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
+                                <TextBlock Text="主色" HorizontalAlignment="Left" Grid.Column="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
                                 <TextBox Grid.Column="1" Style="{StaticResource TextBox.Small}" Height="24" TextChanged="TextBox_TextChanged" Margin="0,0,5,0"
                                          Name="primaryColorTB" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PrimaryColor}"
                                          InputMethod.IsInputMethodEnabled="False"/>
@@ -105,12 +105,12 @@
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoOpenLink}"/>
                             <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="若启用，软件关闭时将标记为“收藏”的历史排序至历史记录最前端">
-                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryBrush}">历史记录</Hyperlink><Run>自动整理</Run>
+                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryTextBrush}">历史记录</Hyperlink><Run>自动整理</Run>
                             </TextBlock>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="3" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoArrange}"/>
                             <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0">
-                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryBrush}">历史记录</Hyperlink><Run>保存数量</Run>
+                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryTextBrush}">历史记录</Hyperlink><Run>保存数量</Run>
                             </TextBlock>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="60" Maximum="500" Minimum="0" FontSize="13" Increment="10"
