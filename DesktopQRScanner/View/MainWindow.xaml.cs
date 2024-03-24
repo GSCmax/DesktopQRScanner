@@ -1,6 +1,8 @@
 ﻿using DesktopQRScanner.Model;
 using DesktopQRScanner.VModel;
+using HandyControl.Data;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Windows;
@@ -169,17 +171,27 @@ namespace DesktopQRScanner.View
             }
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        //private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(primaryColorTB.Text));
+        //        (DataContext as MainWindowVModel).ErrMsg = null;
+        //    }
+        //    catch
+        //    {
+        //        (DataContext as MainWindowVModel).ErrMsg = "主题色颜色无效";
+        //    }
+        //}
+
+        private void primaryColorSS_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            try
-            {
-                Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(primaryColorTB.Text));
-                (DataContext as MainWindowVModel).ErrMsg = null;
-            }
-            catch
-            {
-                (DataContext as MainWindowVModel).ErrMsg = "主题色颜色无效";
-            }
+            var index = Math.Min(5, (int)Math.Floor(e.NewValue));
+            var sub = e.NewValue - index;
+            var range = _colorRangeList[index];
+
+            var color = range.GetColor(sub);
+            Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush(color);
         }
 
         private void Popup_Opened(object sender, EventArgs e)
@@ -190,8 +202,45 @@ namespace DesktopQRScanner.View
         private void Popup_Closed(object sender, EventArgs e)
         {
             PreviewKeyDown += Window_PreviewKeyDown;
-            primaryColorTB.Text = (Application.Current.Resources["PrimaryBrush"] as SolidColorBrush).Color.ToString();
+            //primaryColorTB.Text = (Application.Current.Resources["PrimaryBrush"] as SolidColorBrush).Color.ToString();
         }
+
+        /// <summary>
+        ///     颜色范围集合
+        /// </summary>
+        private readonly List<ColorRange> _colorRangeList = new()
+        {
+            new ColorRange
+            {
+                Start = Color.FromRgb(255, 0, 0),
+                End = Color.FromRgb(255, 0, 255)
+            },
+            new ColorRange
+            {
+                Start = Color.FromRgb(255, 0, 255),
+                End = Color.FromRgb(0, 0, 255)
+            },
+            new ColorRange
+            {
+                Start = Color.FromRgb(0, 0, 255),
+                End = Color.FromRgb(0, 255, 255)
+            },
+            new ColorRange
+            {
+                Start = Color.FromRgb(0, 255, 255),
+                End = Color.FromRgb(0, 255, 0)
+            },
+            new ColorRange
+            {
+                Start = Color.FromRgb(0, 255, 0),
+                End = Color.FromRgb(255, 255, 0)
+            },
+            new ColorRange
+            {
+                Start = Color.FromRgb(255, 255, 0),
+                End = Color.FromRgb(255, 0, 0)
+            }
+        };
     }
 
     /// <summary>
