@@ -7,7 +7,7 @@
            xmlns:vm="clr-namespace:DesktopQRScanner.VModel"
            xmlns:tools="clr-namespace:DesktopQRScanner.Tools"
            xmlns:hc="https://handyorg.github.io/handycontrol"
-           mc:Ignorable="d" Title="二维码扫描小工具"
+           mc:Ignorable="d" Title="桌面二维码扫描小工具"
            Icon="/DesktopQRScanner;component/Resources/icon.ico"
            WindowStartupLocation="CenterScreen" Topmost="True"
            ResizeMode="CanMinimize" SizeToContent="WidthAndHeight"
