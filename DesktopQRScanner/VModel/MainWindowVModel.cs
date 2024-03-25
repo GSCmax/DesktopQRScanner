@@ -354,6 +354,8 @@ namespace DesktopQRScanner.VModel
 
         private UsbCamera camera;
         private bool ifCameraStarted = false;
+        private const int sampleFrame = 15; //抽样值
+        private int indexFrame = 0;
 
         /// <summary>
         /// 打开或关闭摄像头
@@ -368,16 +370,33 @@ namespace DesktopQRScanner.VModel
                     var formats = UsbCamera.GetVideoFormat(GlobalDataHelper.appConfig.UseWebCamIndex);
                     var format = formats[0];
                     camera = new UsbCamera(GlobalDataHelper.appConfig.UseWebCamIndex, format);
+                    indexFrame = 0;
                     camera.PreviewCaptured += (bmp) =>
                     {
-                        Application.Current.Dispatcher.Invoke(() =>
+                        if (indexFrame < sampleFrame)
                         {
-                            BitmapSource4Binding = new BitmapSource4BindingClass()
+                            Application.Current.Dispatcher.Invoke(() =>
                             {
-                                NeedRaise = true,
-                                BitmapSourceData = bmp
-                            };
-                        });
+                                BitmapSource4Binding = new BitmapSource4BindingClass()
+                                {
+                                    NeedRaise = false,
+                                    BitmapSourceData = bmp
+                                };
+                            });
+                            indexFrame++;
+                        }
+                        else
+                        {
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                BitmapSource4Binding = new BitmapSource4BindingClass()
+                                {
+                                    NeedRaise = true,
+                                    BitmapSourceData = bmp
+                                };
+                            });
+                            indexFrame = 0;
+                        }
                     };
                     camera.Start();
                     ShowAddButton = false;
