@@ -1,4 +1,5 @@
 ﻿using DesktopQRScanner.Model;
+using DesktopQRScanner.Tools;
 using DesktopQRScanner.VModel;
 using System;
 using System.Globalization;
@@ -171,14 +172,22 @@ namespace DesktopQRScanner.View
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            if (primaryColorTB.Text.ToUpper() == "SYSTEM")
             {
-                Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(primaryColorTB.Text));
+                Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush(GlobalDataHelper.GetSystemColor());
                 (DataContext as MainWindowVModel).ErrMsg = null;
             }
-            catch
+            else
             {
-                (DataContext as MainWindowVModel).ErrMsg = "主题色颜色无效";
+                try
+                {
+                    Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(primaryColorTB.Text));
+                    (DataContext as MainWindowVModel).ErrMsg = null;
+                }
+                catch
+                {
+                    (DataContext as MainWindowVModel).ErrMsg = "颜色代码无效";
+                }
             }
         }
 
@@ -190,7 +199,6 @@ namespace DesktopQRScanner.View
         private void Popup_Closed(object sender, EventArgs e)
         {
             PreviewKeyDown += Window_PreviewKeyDown;
-            primaryColorTB.Text = (Application.Current.Resources["PrimaryBrush"] as SolidColorBrush).Color.ToString();
         }
     }
 

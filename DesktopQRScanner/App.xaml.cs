@@ -28,7 +28,7 @@ namespace DesktopQRScanner
 
             GlobalDataHelper.Init();
 
-            Resources.Add("PrimaryBrush", new SolidColorBrush((Color)ColorConverter.ConvertFromString(GlobalDataHelper.appConfig.PrimaryColor)));
+            Resources.Add("PrimaryBrush", new SolidColorBrush(GlobalDataHelper.appConfig.PrimaryColor.ToUpper() == "SYSTEM" ? GlobalDataHelper.GetSystemColor() : (Color)ColorConverter.ConvertFromString(GlobalDataHelper.appConfig.PrimaryColor)));
 
             if (GlobalDataHelper.appConfig.UseDarkTheme)
                 UpdateSkin(SkinType.Dark);
@@ -41,6 +41,17 @@ namespace DesktopQRScanner
         {
             base.OnExit(e);
 
+            if (GlobalDataHelper.appConfig.PrimaryColor.ToUpper() != "SYSTEM")
+            {
+                try
+                {
+                    Color tempColor = (Color)ColorConverter.ConvertFromString(GlobalDataHelper.appConfig.PrimaryColor);
+                }
+                catch
+                {
+                    GlobalDataHelper.appConfig.PrimaryColor = (Application.Current.Resources["PrimaryBrush"] as SolidColorBrush).Color.ToString();
+                }
+            }
             GlobalDataHelper.Save();
         }
 

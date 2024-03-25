@@ -86,7 +86,8 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="主色" HorizontalAlignment="Left" Grid.Column="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"/>
+                                <TextBlock Text="主题色" HorizontalAlignment="Left" Grid.Column="0" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
+                                           ToolTip="软件主题色，可输入颜色名称或以#号开头的十六进制颜色代码以使用固定颜色，另可输入&quot;system&quot;以使用系统主题色"/>
                                 <TextBox Grid.Column="1" Style="{StaticResource TextBox.Small}" Height="24" TextChanged="TextBox_TextChanged" Margin="0,0,5,0"
                                          Name="primaryColorTB" Text="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=PrimaryColor}"
                                          InputMethod.IsInputMethodEnabled="False"/>
