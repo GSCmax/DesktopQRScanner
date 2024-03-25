@@ -42,7 +42,7 @@ namespace DesktopQRScanner.Model
         /// <summary>
         /// 等待最小化动画完成时间
         /// </summary>
-        public double MinimizeWaitDelay { get; set; } = 0.2;
+        public int MinimizeWaitDelay { get; set; } = 200;
 
         /// <summary>
         /// 使用哪个摄像头

@@ -113,15 +113,15 @@
                                 <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryTextBrush}">历史记录</Hyperlink><Run>保存数量</Run>
                             </TextBlock>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
-                                              Width="75" Maximum="500" Minimum="0" FontSize="13" Increment="10"
+                                              Width="70" Maximum="500" Minimum="0" FontSize="13" Increment="50"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=HistorySaveCount}"/>
                             <TextBlock Text="最小化动画等待时间" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
-                                       ToolTip="单位：秒"/>
+                                       ToolTip="单位：毫秒"/>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="5" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
-                                              Width="75" Maximum="1" Minimum="0" FontSize="13" Increment="0.1" DecimalPlaces="1"
+                                              Width="70" Maximum="2000" Minimum="0" FontSize="13" Increment="50"
                                               Value="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=MinimizeWaitDelay}"/>
-                            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Style="{StaticResource ComboBox.Small}" Height="24" Margin="5,3,5,3" ToolTip="调用摄像头名称"
-                                      SelectedValue="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamIndex}"
+                            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Style="{StaticResource ComboBoxExtend.Small}" hc:InfoElement.ContentHeight="24" Margin="5,3,5,3"
+                                      SelectedValue="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=UseWebCamIndex}" hc:InfoElement.Placeholder="请在此选择摄像头"
                                       SelectedValuePath="CamIndex" DisplayMemberPath="CamName" ItemsSource="{x:Static tools:GlobalDataHelper.cameraArray}"
                                       Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"/>
                         </Grid>
