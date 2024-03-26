@@ -173,12 +173,12 @@ namespace DesktopQRScanner.View
         {
             if (primaryColorTB.Text.ToUpper() == "SYSTEM")
             {
-                Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush(SystemParameters.WindowGlassColor);
+                Application.Current.Resources["PrimaryBrush"] = SystemParameters.WindowGlassBrush;
                 SystemParameters.StaticPropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName == nameof(SystemParameters.WindowGlassColor))
+                    if (e.PropertyName == nameof(SystemParameters.WindowGlassBrush))
                     {
-                        Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush(SystemParameters.WindowGlassColor);
+                        Application.Current.Resources["PrimaryBrush"] = SystemParameters.WindowGlassBrush;
                     }
                 };
                 (DataContext as MainWindowVModel).ErrMsg = null;

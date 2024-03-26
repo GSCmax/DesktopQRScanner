@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources/icon.ico</ApplicationIcon>
-    <Authors>Shengchao Guan</Authors>
-    <Version>0.3.2.2</Version>
-    <Copyright>Copyright © Shengchao Guan 2024</Copyright>
+    <Authors>GuanShengchao</Authors>
+    <Version>0.3.2.3</Version>
+    <Copyright>Copyright © GuanShengchao 2024</Copyright>
     <RepositoryUrl>https://github.com/GSCmax/DesktopQRScanner</RepositoryUrl>
   </PropertyGroup>
 

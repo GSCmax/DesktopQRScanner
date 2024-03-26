@@ -1,5 +1,6 @@
 ﻿using DesktopQRScanner.Model;
 using GitHub.secile.UsbCamera;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
@@ -7,6 +8,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.Tools
@@ -102,6 +105,44 @@ namespace DesktopQRScanner.Tools
 
             var json2 = JsonConvert.SerializeObject(appConfig.AutoArrange ? historyLinks.OrderByDescending(n => n.IsStared).Take(appConfig.HistorySaveCount) : historyLinks.Take(appConfig.HistorySaveCount), Formatting.Indented);
             File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}Historys.json", json2);
+        }
+
+        /// <summary>
+        /// 获取系统主题色
+        /// </summary>
+        [DllImport("dwmapi.dll")]
+        private static extern void DwmGetColorizationColor(out int pcrColorization, out bool pfOpaqueBlend);
+        public static Color GetSystemColor()
+        {
+            int color;
+            DwmGetColorizationColor(out color, out _);
+            return new Color()
+            {
+                A = (byte)(color >> 24),
+                R = (byte)(color >> 16),
+                G = (byte)(color >> 8),
+                B = (byte)(color)
+            };
+        }
+
+        /// <summary>
+        /// 从注册表中获取当前用户设置的颜色
+        /// </summary>
+        public static Color GetWindowGlassColor()
+        {
+            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM"))
+            {
+                if (key != null)
+                {
+                    var value = key.GetValue("AccentColor");
+                    if (value != null && value is int intValue)
+                    {
+                        var color = intValue & 0xFFFFFF; // 取出RGB部分
+                        return Color.FromRgb((byte)(color), (byte)(color >> 8), (byte)(color >> 16));
+                    }
+                }
+            }
+            return Colors.DodgerBlue; // 默认颜色
         }
     }
 }
