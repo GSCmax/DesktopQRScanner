@@ -28,8 +28,6 @@ namespace DesktopQRScanner
 
             GlobalDataHelper.Init();
 
-            Resources.Add("PrimaryBrush", new SolidColorBrush(GlobalDataHelper.appConfig.PrimaryColor.ToUpper() == "SYSTEM" ? GlobalDataHelper.GetSystemColor() : (Color)ColorConverter.ConvertFromString(GlobalDataHelper.appConfig.PrimaryColor)));
-
             if (GlobalDataHelper.appConfig.UseDarkTheme)
                 UpdateSkin(SkinType.Dark);
 
@@ -63,8 +61,6 @@ namespace DesktopQRScanner
             {
                 Source = new Uri("pack://application:,,,/HandyControl;component/Themes/Theme.xaml")
             });
-
-            //Current.MainWindow?.OnApplyTemplate();
         }
     }
 }

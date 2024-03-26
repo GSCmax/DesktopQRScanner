@@ -7,8 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace DesktopQRScanner.Tools
@@ -104,24 +102,6 @@ namespace DesktopQRScanner.Tools
 
             var json2 = JsonConvert.SerializeObject(appConfig.AutoArrange ? historyLinks.OrderByDescending(n => n.IsStared).Take(appConfig.HistorySaveCount) : historyLinks.Take(appConfig.HistorySaveCount), Formatting.Indented);
             File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}Historys.json", json2);
-        }
-
-        /// <summary>
-        /// 获取系统主题色
-        /// </summary>
-        [DllImport("dwmapi.dll")]
-        private static extern void DwmGetColorizationColor(out int pcrColorization, out bool pfOpaqueBlend);
-        public static Color GetSystemColor()
-        {
-            int color;
-            DwmGetColorizationColor(out color, out _);
-            return new Color()
-            {
-                A = (byte)(color >> 24),
-                R = (byte)(color >> 16),
-                G = (byte)(color >> 8),
-                B = (byte)(color)
-            };
         }
     }
 }

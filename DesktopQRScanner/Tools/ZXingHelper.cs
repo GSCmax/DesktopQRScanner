@@ -10,7 +10,7 @@ using ZXing.Windows.Compatibility;
 
 namespace DesktopQRScanner.Tools
 {
-    internal class ZXingHelper
+    internal static class ZXingHelper
     {
         /// <summary>
         /// 扫描QR
