@@ -1,5 +1,4 @@
 ﻿using DesktopQRScanner.Model;
-using DesktopQRScanner.Tools;
 using DesktopQRScanner.VModel;
 using System;
 using System.Globalization;
