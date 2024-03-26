@@ -1,8 +1,8 @@
 # DesktopQRScanner Windows桌面二维码扫描小工具
 
-![图片](https://github.com/GSCmax/DesktopQRScanner/assets/8372598/609b6c61-81b2-47cd-ad59-0e16f74cefce)
+![图片](https://github.com/GSCmax/DesktopQRScanner/assets/8372598/4813f27d-5739-425c-b94c-e5949054c5b0)
 
-![图片](https://github.com/GSCmax/DesktopQRScanner/assets/8372598/d75186ec-436d-42aa-95c1-798926ba683d)
+![图片](https://github.com/GSCmax/DesktopQRScanner/assets/8372598/597a06f5-6e03-42db-9823-7ade4394e8ef)
 
 本项目使用.NET6.0开发，集成二维码扫描、生成、历史记录管理等功能。无广告，不联网。
 
