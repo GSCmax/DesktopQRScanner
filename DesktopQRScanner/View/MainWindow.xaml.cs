@@ -174,13 +174,7 @@ namespace DesktopQRScanner.View
             if (primaryColorTB.Text.ToUpper() == "SYSTEM")
             {
                 Application.Current.Resources["PrimaryBrush"] = SystemParameters.WindowGlassBrush;
-                SystemParameters.StaticPropertyChanged += (s, e) =>
-                {
-                    if (e.PropertyName == nameof(SystemParameters.WindowGlassBrush))
-                    {
-                        Application.Current.Resources["PrimaryBrush"] = SystemParameters.WindowGlassBrush;
-                    }
-                };
+                SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
                 (DataContext as MainWindowVModel).ErrMsg = null;
             }
             else
@@ -188,12 +182,21 @@ namespace DesktopQRScanner.View
                 try
                 {
                     Application.Current.Resources["PrimaryBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(primaryColorTB.Text));
+                    SystemParameters.StaticPropertyChanged -= SystemParameters_StaticPropertyChanged;
                     (DataContext as MainWindowVModel).ErrMsg = null;
                 }
                 catch
                 {
                     (DataContext as MainWindowVModel).ErrMsg = "颜色代码无效";
                 }
+            }
+        }
+
+        private void SystemParameters_StaticPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SystemParameters.WindowGlassBrush))
+            {
+                Application.Current.Resources["PrimaryBrush"] = SystemParameters.WindowGlassBrush;
             }
         }
 
