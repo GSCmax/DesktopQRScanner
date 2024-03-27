@@ -8,14 +8,14 @@
     <ApplicationIcon>Resources/icon.ico</ApplicationIcon>
     <Authors>GuanShengchao</Authors>
     <Version>0.3.2.4</Version>
-    <Copyright>Copyright © GuanShengchao 2024</Copyright>
+    <Copyright>Copyright © GSC 2024</Copyright>
     <RepositoryUrl>https://github.com/GSCmax/DesktopQRScanner</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="HandyControl" Version="3.4.0" />
-    <PackageReference Include="HinsHo.ScreenShot.CSharp" Version="0.2.3" />
+    <PackageReference Include="HinsHo.ScreenShot.CSharp" Version="0.2.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ZXing.Net" Version="0.16.9" />
     <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />
