@@ -57,12 +57,12 @@
                 <TextBlock FontWeight="Bold" Text="{Binding ErrMsg}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
             </Border>
             <ToggleButton Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" Style="{StaticResource ToggleButtonIconTransparent}"
-                          hc:IconSwitchElement.Geometry="{StaticResource UnPinned}" hc:IconSwitchElement.GeometrySelected="{StaticResource Pinned}" Padding="4"
+                          hc:IconSwitchElement.Geometry="{StaticResource UnPinned}" hc:IconSwitchElement.GeometrySelected="{StaticResource Pinned}" Padding="5"
                           IsChecked="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Topmost}"/>
-            <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0" Padding="5"
+            <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource GithubGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showGithubClickCommand}" ToolTip="点击前往项目开源地址，欢迎加星😀"/>
-            <Button Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0" Padding="5"
+            <Button Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
                     hc:BorderElement.CornerRadius="0" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
             <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-165" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False" Opened="Popup_Opened" Closed="Popup_Closed">
