@@ -7,7 +7,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources/icon.ico</ApplicationIcon>
     <Authors>GuanShengchao</Authors>
-    <Version>0.3.2.4</Version>
+    <Version>0.3.2.5</Version>
     <Copyright>Copyright © GSC 2024</Copyright>
     <RepositoryUrl>https://github.com/GSCmax/DesktopQRScanner</RepositoryUrl>
   </PropertyGroup>

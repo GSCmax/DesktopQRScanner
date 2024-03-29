@@ -13,9 +13,5 @@ namespace DesktopQRScanner.Model
 
         [ObservableProperty]
         private DateTime linkDateTime;
-
-        [ObservableProperty]
-        [property: Newtonsoft.Json.JsonIgnore]
-        private bool isSelected;
     }
 }

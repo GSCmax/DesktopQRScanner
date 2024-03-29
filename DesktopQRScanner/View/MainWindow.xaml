@@ -276,12 +276,11 @@
                         </Border>
                         <Border Grid.Row="1">
                             <ListBox BorderThickness="0" Style="{StaticResource ListBox.Small}" ItemsSource="{x:Static tools:GlobalDataHelper.historyLinks}" SelectedItem="{Binding SelectedLinkItem}">
-                                <ListBox.ItemContainerStyle >
+                                <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle.Small}">
                                         <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
                                         <Setter Property="hc:BorderElement.CornerRadius" Value="12"/>
                                         <Setter Property="Margin" Value="0,1"/>
-                                        <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                         <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
                                         <Setter Property="ToolTip">
                                             <Setter.Value>
@@ -344,9 +343,15 @@
                                             <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
                                         </Grid>
                                         <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                                <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
-                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="True"/>
+                                                    <Condition Binding="{Binding Path=(Selector.IsSelectionActive), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
+                                                </MultiDataTrigger.Setters>
+                                            </MultiDataTrigger>
                                         </DataTemplate.Triggers>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
