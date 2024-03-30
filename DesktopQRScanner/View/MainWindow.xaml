@@ -179,16 +179,6 @@
                                HorizontalAlignment="Center" VerticalAlignment="Center"
                                ToolTip="右击可复制或保存图像"
                                ToolTipService.IsEnabled="{Binding ShowAddButton}">
-                            <!--<Image.ToolTip>
-                                <Grid Width="200" Margin="-4,0,-4,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Center" Text="右击可复制或保存图像"/>
-                                    <Image Grid.Row="1" Source="{Binding BitmapSource4Binding.BitmapSourceData}" Stretch="Uniform"/>
-                                </Grid>
-                            </Image.ToolTip>-->
                             <Image.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Style="{StaticResource MyMenuItemBaseStyle}" Header="复制图像" Command="{Binding PlacementTarget.Tag.copyImageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
@@ -346,24 +336,6 @@
                                             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="True">
                                                 <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
                                             </DataTrigger>
-                                            <!--<MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="True"/>
-                                                    <Condition Binding="{Binding Path=(Selector.IsSelectionActive), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" Value="True"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="True"/>
-                                                    <Condition Binding="{Binding Path=(ContextMenu.IsOpen), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" Value="True"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>-->
                                         </DataTemplate.Triggers>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
