@@ -343,7 +343,10 @@
                                             <TextBlock Name="TB" Grid.Column="1" FontSize="15" Text="{Binding Link}"/>
                                         </Grid>
                                         <DataTemplate.Triggers>
-                                            <MultiDataTrigger>
+                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="True">
+                                                <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
+                                            </DataTrigger>
+                                            <!--<MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="True"/>
                                                     <Condition Binding="{Binding Path=(Selector.IsSelectionActive), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" Value="True"/>
@@ -352,6 +355,15 @@
                                                     <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}" Value="True"/>
+                                                    <Condition Binding="{Binding Path=(ContextMenu.IsOpen), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter TargetName="TB" Property="TextWrapping" Value="Wrap"/>
+                                                </MultiDataTrigger.Setters>
+                                            </MultiDataTrigger>-->
                                         </DataTemplate.Triggers>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
