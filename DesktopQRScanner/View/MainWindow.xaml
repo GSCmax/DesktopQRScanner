@@ -58,12 +58,11 @@
             </Border>
             <ToggleButton Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" Style="{StaticResource ToggleButtonIconTransparent}"
                           hc:IconSwitchElement.Geometry="{StaticResource UnPinned}" hc:IconSwitchElement.GeometrySelected="{StaticResource Pinned}" Padding="5"
-                          IsChecked="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Topmost}"
-                          ToolTip="切换置顶状态"/>
-            <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
+                          IsChecked="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Topmost}" Focusable="False" ToolTip="切换置顶状态"/>
+            <Button Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0" Focusable="False"
                     hc:BorderElement.CornerRadius="0" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource GithubGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showGithubClickCommand}" ToolTip="点击前往项目开源地址，欢迎加星😀"/>
-            <Button Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0"
+            <Button Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="45" BorderThickness="0" Focusable="False"
                     hc:BorderElement.CornerRadius="0" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"
                     Style="{StaticResource ButtonIcon}" Command="{Binding showPopClickCommand}" ToolTip="设置" Name="settingBTN"/>
             <Popup PlacementTarget="{Binding ElementName=settingBTN}" HorizontalOffset="-165" VerticalOffset="0" IsOpen="{Binding ShowPop}" AllowsTransparency="True" StaysOpen="False" Opened="Popup_Opened" Closed="Popup_Closed">
@@ -111,12 +110,12 @@
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoOpenLink}"/>
                             <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0"
                                        ToolTip="若启用，软件关闭时将标记为“收藏”的历史排序至历史记录最前端">
-                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryTextBrush}">历史记录</Hyperlink><Run>自动整理</Run>
+                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryTextBrush}" Focusable="False">历史记录</Hyperlink><Run>自动整理</Run>
                             </TextBlock>
                             <ToggleButton HorizontalAlignment="Right" Grid.Column="1" Grid.Row="3" Style="{StaticResource ToggleButtonSwitch}" Margin="0,0,5,0"
                                           IsChecked="{Binding Source={x:Static tools:GlobalDataHelper.appConfig}, Path=AutoArrange}"/>
                             <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockDefault}" Margin="5,0,5,0">
-                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryTextBrush}">历史记录</Hyperlink><Run>保存数量</Run>
+                                <Hyperlink Command="{Binding openHistoryFileCommand}" Foreground="{DynamicResource PrimaryTextBrush}" Focusable="False">历史记录</Hyperlink><Run>保存数量</Run>
                             </TextBlock>
                             <hc:NumericUpDown HorizontalAlignment="Right" Grid.Column="1" Grid.Row="4" Style="{StaticResource NumericUpDown.Small}" Height="24" Margin="0,0,5,0"
                                               Width="70" Maximum="500" Minimum="0" FontSize="13" Increment="50"
@@ -194,7 +193,7 @@
                                 </ContextMenu>
                             </Image.ContextMenu>
                         </Image>
-                        <Button Width="30" Height="30" BorderThickness="0" Style="{StaticResource ButtonIconCircular}" FocusVisualStyle="{x:Null}"
+                        <Button Width="30" Height="30" BorderThickness="0" Style="{StaticResource ButtonIconCircular}"
                                 Command="{Binding openFileClickCommand}" ToolTip="{Binding BitmapSource4Binding, Converter={StaticResource ITTC}}"
                                 Background="{DynamicResource PrimaryBrush}" Foreground="White"
                                 hc:IconElement.Geometry="{StaticResource AddGeometry}"
@@ -221,8 +220,8 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" HorizontalAlignment="Stretch" Height="30" FontSize="18" BorderThickness="0"
                         Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                        hc:BorderElement.CornerRadius="15,5,5,15" Effect="{StaticResource MyEffectShadow}"
-                        Command="{Binding screenShotCommand}" FocusVisualStyle="{x:Null}">
+                        hc:BorderElement.CornerRadius="15" Effect="{StaticResource MyEffectShadow}"
+                        Command="{Binding screenShotCommand}" FocusVisualStyle="{StaticResource MyButtonFocusVisualStyle}">
                     <Button.Content>
                         <TextBlock Text="矩形截图" VerticalAlignment="Center"/>
                     </Button.Content>
@@ -230,22 +229,23 @@
                 <Grid Grid.Column="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="15"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" HorizontalAlignment="Stretch" Height="30" FontSize="18" BorderThickness="0"
                             Background="{DynamicResource PrimaryBrush}" Foreground="White"
-                            hc:BorderElement.CornerRadius="5,15,15,5" Effect="{StaticResource MyEffectShadow}"
-                            Command="{Binding fullScreenShotCommand}" FocusVisualStyle="{x:Null}">
+                            hc:BorderElement.CornerRadius="15" Effect="{StaticResource MyEffectShadow}"
+                            Command="{Binding fullScreenShotCommand}" FocusVisualStyle="{StaticResource MyButtonFocusVisualStyle}">
                         <Button.Content>
                             <TextBlock Text="全屏截图" VerticalAlignment="Center"/>
                         </Button.Content>
                     </Button>
-                    <Button Grid.Column="1" Width="30" Height="30" BorderThickness="0" Margin="15,0,0,0"
+                    <Button Grid.Column="2" Width="30" Height="30" BorderThickness="0"
                             Background="{DynamicResource PrimaryBrush}" Foreground="White"
                             Effect="{StaticResource MyEffectShadow}"
                             Visibility="{Binding Source={x:Static tools:GlobalDataHelper.ifHaveCamera}, Converter={StaticResource Boolean2VisibilityConverter}}"
                             Style="{StaticResource ButtonIconCircular}" hc:IconElement.Geometry="{StaticResource WebCamGeometry}"
-                            Command="{Binding openWebCamClickCommand}" FocusVisualStyle="{x:Null}"/>
+                            Command="{Binding openWebCamClickCommand}"/>
                 </Grid>
             </Grid>
         </hc:TransitioningContentControl>

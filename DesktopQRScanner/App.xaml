@@ -64,6 +64,15 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style o:Freeze="True" x:Key="MyButtonFocusVisualStyle">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle Style="{StaticResource RectangleFocusVisualCircular}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <!--#endregion-->
         </ResourceDictionary>
     </Application.Resources>
