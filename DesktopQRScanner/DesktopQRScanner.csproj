@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net6.0-windows;net8.0-windows;net472;net48</TargetFrameworks>
+    <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources/icon.ico</ApplicationIcon>

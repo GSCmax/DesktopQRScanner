@@ -4,9 +4,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using ZXing;
-using ZXing.QrCode;
-using ZXing.Windows.Compatibility;
 
 namespace DesktopQRScanner.Tools
 {
@@ -17,11 +14,11 @@ namespace DesktopQRScanner.Tools
         /// </summary>
         /// <param name="imageSource"></param>
         /// <returns></returns>
-        public static string ReadQRCode(BitmapSource bitmapSource)
+        public static string? ReadQRCode(BitmapSource bitmapSource)
         {
-            var reader = new BarcodeReader();
-            var result = reader.Decode(Convert2Bitmap(bitmapSource));
-            return result?.Text;
+            ZXing.Windows.Compatibility.BarcodeReader reader = new();
+            ZXing.Result result = reader.Decode(Convert2Bitmap(bitmapSource));
+            return result.Text;
         }
 
         /// <summary>
@@ -33,9 +30,9 @@ namespace DesktopQRScanner.Tools
         /// <returns></returns>
         public static BitmapSource GenerateQRCode(string text, int width = 300, int height = 300)
         {
-            var writer = new BarcodeWriter();
-            writer.Format = BarcodeFormat.QR_CODE;
-            QrCodeEncodingOptions options = new QrCodeEncodingOptions()
+            ZXing.Windows.Compatibility.BarcodeWriter writer = new();
+            writer.Format = ZXing.BarcodeFormat.QR_CODE;
+            ZXing.QrCode.QrCodeEncodingOptions options = new()
             {
                 DisableECI = true,
                 CharacterSet = "UTF-8",
