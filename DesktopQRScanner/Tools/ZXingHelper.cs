@@ -18,7 +18,7 @@ namespace DesktopQRScanner.Tools
         {
             ZXing.Windows.Compatibility.BarcodeReader reader = new();
             ZXing.Result result = reader.Decode(Convert2Bitmap(bitmapSource));
-            return result.Text;
+            return result?.Text;
         }
 
         /// <summary>
